@@ -1,0 +1,39 @@
+---
+Parameters:
+  HydraTestResultsRoleImportName:
+    Type: String
+    Default: HydraTestResultsRole
+  IsSAMToolkit:
+    Type: String
+    AllowedValues: ["true","false"]
+    Default: "false"
+Conditions:
+  CreateHydraConfig:
+    Fn::And:
+      - {Condition: HasHydra}
+      - Fn::Equals:
+          - {"Ref": "IsSAMToolkit"}
+          - "false"
+Resources:
+  HydraPersistentConfiguration:
+    Type: "AWS::CodeTest::PersistentConfiguration"
+    Condition: CreateHydraConfig
+    Properties:
+      Name: !Sub "${AWS::StackName}"
+      Version: "20200218"
+      ResultsRoleArn:
+        "Fn::ImportValue":
+          "Ref": "HydraTestResultsRoleImportName"
+      VpcConfig:
+        "Fn::If":
+          - "RunLambdaInVPC"
+          - "SecurityGroupIds":
+              - "Ref": "LambdaSecurityGroup"
+            "Subnets":
+              - "Fn::ImportValue": "PrivateSubnet01"
+              - "Fn::ImportValue": "PrivateSubnet02"
+          - "Ref": "AWS::NoValue"
+Outputs:
+  PersistentConfigurationId:
+    Condition: CreateHydraConfig
+    Value: !Ref HydraPersistentConfiguration

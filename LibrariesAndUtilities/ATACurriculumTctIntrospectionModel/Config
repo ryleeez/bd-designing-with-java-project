@@ -1,0 +1,40 @@
+# -*-perl-*-
+
+package.ATACurriculumTctIntrospectionModel = {
+    build-system = happytrails;
+    interfaces = (1.0);
+
+    flavors = {
+        map = single;
+        generation = 1;
+    };
+    scope = interface;
+
+    deploy = {
+        generic = true;
+    };
+
+    build-environment = {
+        chroot = basic;
+        network-access = blocked;
+    };
+
+    dependencies = {
+        1.0 = {
+        };
+    };
+
+    build-tools = {
+        1.0 = {
+            JDK8 = 1.0;
+            HappierTrails = 3.3;
+            CoralGenerator = 1.2;
+        };
+    };
+
+    targets = {
+        model = {
+            type = coralmodel;
+        };
+    };
+};

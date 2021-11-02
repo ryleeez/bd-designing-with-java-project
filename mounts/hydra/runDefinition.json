@@ -1,0 +1,24 @@
+{
+  "SchemaVersion": "1.0",
+  "SchemaType": "HydraJavaTestNG",
+  "HydraParameters": {
+  },
+  "HandlerParameters": {
+    "parameters": {
+      "awsAccountId": "012345678910",
+      "domain": "Beta",
+      "realm": "us-west-2",
+      "endpointOverride": "http://com.amazon.atacurriculumsustainabilityshipmentservicelambda"
+    },
+    "tests": [
+      {
+        "name": "ATACurriculumSustainabilityShipmentServiceTCTs",
+        "packages": [
+          {
+            "name": "package.placeholder"
+          }
+        ]
+      }
+    ]
+  }
+}

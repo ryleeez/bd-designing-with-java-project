@@ -1,0 +1,11 @@
+build/
+*.iml
+.idea/
+/configuration/stack-exec
+mounts/events/prepare_shipment.json
+
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build

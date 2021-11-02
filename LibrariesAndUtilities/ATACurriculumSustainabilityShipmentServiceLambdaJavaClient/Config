@@ -1,0 +1,60 @@
+# -*-perl-*-
+
+package.ATACurriculumSustainabilityShipmentServiceLambdaJavaClient = {
+    build-system = happytrails;
+
+    interfaces = (C2020July);
+
+    deploy = {
+        generic = true;
+        map = (default,
+            "-generated-test/**",
+            "-copied-tst/**",
+            "-smoketests/**",
+            "-src-files/**");
+    };
+
+    build-environment = {
+        chroot = basic;
+        network-access = blocked;
+    };
+
+    scope = interface;
+
+    test-dependencies = {
+        C2020July = {
+            junit = 4;
+
+        };
+    };
+
+    dependencies = {
+        C2020July = {
+            AWSJavaClientRuntime = 1.11.x;
+        };
+    };
+
+    runtime-dependencies = {
+        C2020July = {
+            AmazonCACerts = 1.0;
+        };
+    };
+
+    build-tools = {
+        C2020July = {
+            # Use OpenJDK8 unless you need some features
+            # that only appear in Oracle JDK8
+            OpenJDK8 = 1.1;
+            HappierTrails = 3.4;
+            ATACurriculumSustainabilityShipmentServiceModel = C2020July;
+            AWSJavaClientC2jCodeGenerator = 1.11.x;
+        };
+    };
+
+    targets = {
+        ATACurriculumSustainabilityShipmentServiceLambdaJavaClient-C2020July = {
+            type = javalibrary;
+        };
+    };
+
+};

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definition assembly="com.amazon.ata.test.tct.introspection.types" version="1.0">
+
+  <documentation target="ExecuteTctSuite">
+    For a given test suite ID, execute all related tests, and return a test suite report.
+  </documentation>
+
+  <operation name="ExecuteTctSuite">
+    <input target="ExecuteTctSuiteRequest"/>
+    <output target="ExecuteTctSuiteResponse"/>
+  </operation>
+  <http target="ExecuteTctSuite">
+    <verb value="GET"/>
+    <uri value="executeTcts?tctSuiteId={tctSuiteId}"/>
+  </http>
+
+  <structure name="ExecuteTctSuiteRequest">
+    <member name="tctSuiteId" target="nonEmptyTctStringValue"/>
+  </structure>
+  <required target="ExecuteTctSuiteRequest$tctSuiteId"/>
+  <httplabel target="ExecuteTctSuiteRequest$tctSuiteId">
+    <label value="tctSuiteId"/>
+  </httplabel>
+
+  <structure name="ExecuteTctSuiteResponse">
+    <member name="tctSuiteReport" target="TctSuiteReport" />
+  </structure>
+
+  <structure name="TctSuiteReport">
+    <member name="tctSuiteId" target="nonEmptyTctStringValue"/>
+    <member name="tctResultList" target="TctResultList"/>
+  </structure>
+
+  <list name="TctResultList">
+    <member target="TctResult"/>
+  </list>
+
+  <structure name="TctResult">
+    <member name="tctId" target="TctId"/>
+    <member name="passed" target="boolean"/>
+    <member name="errorMessage" target="tctStringValue"/>
+  </structure>
+
+  <structure name="TctId">
+    <member name="tctDisplayName" target="tctStringValue"/>
+    <member name="tctParentDisplayName" target="tctStringValue"/>
+  </structure>
+
+  <string name="tctStringValue"/>
+  <boolean name="boolean"/>
+
+  <string name="nonEmptyTctStringValue"/>
+  <length target="nonEmptyTctStringValue">
+    <min value="1"/>
+  </length>
+
+</definition>

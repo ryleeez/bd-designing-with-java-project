@@ -1,0 +1,80 @@
+# -*-perl-*-
+
+package.ATACurriculumSustainabilityShipmentServiceTCTs = {
+    interfaces = (C2020July);
+
+    scope = interface;
+
+    deploy = {
+        generic = true;
+    };
+
+    dependencies = {
+        C2020July = {
+            AmazonCACerts                                               = 1.0;
+            JakartaCommons-lang3                                        = 3.x;
+            AWSCloudFormationJavaClient                                 = 1.11.x;
+            AWSJavaClientRuntime                                        = 1.11.x;
+            ATACurriculumTestInfrastructure                             = 1.0;
+            ATAIntegrationTestInfrastructure                            = 1.0;
+            ATACurriculumSustainabilityShipmentServiceLambdaJavaClient  = C2020July;
+            ATACurriculumSustainabilityShipmentServiceModel             = C2020July;
+            BONESIsengardJavaUtils                                      = 1.1;
+            Log4j-api                                                   = 2.x;
+            OdinAWSCredentials                                          = 1.3;
+            TestNG                                                      = 6.x;
+        };
+    };
+
+    runtime-dependencies = {
+        C2020July = {
+            HydraTestPlatformTestNGLib                                      = 1.0;
+
+            Jcl-over-log4j2                                                 = 2.x; # Coral uses jakarta commons logging.
+            Jul-over-log4j2                                                 = 2.x; # Guava will occasionally log to java.util.log.
+            Log4j-1_2-api                                                   = 2.6; # Many libraries depend on log4j 1.2.
+            log4j                                                           = 2.6; # Explicit dependency on log4j.
+        };
+    };
+
+    test-dependencies = {
+        C2020July = {
+        };
+    };
+
+    resolves-conflict-dependencies = {
+        C2020July = {
+            JakartaCommons-codec    = 1;
+            Jackson-databind        = 2.9.x;
+            Jackson-core            = 2.9.x;
+            Jackson-annotations     = 2.9.x;
+            Json-org-java           = 2.3;
+            log4j                   = 2.6;
+            TestNG                  = 6.x;
+            SnakeYAML               = 1.16;
+            GoogleGuava             = 23.x;
+            Gson                    = 2.3.x;
+            JakartaCommons-IO       = 2.5;
+        };
+    };
+
+    build-environment = {
+        chroot = basic;
+        network-access = blocked;
+    };
+
+    build-system = happytrails;
+
+    build-tools = {
+        C2020July = {
+            ATACheckstyle       = 1.1;
+            HappierTrails       = 3.4;
+            OpenJDK8            = 1.1;
+            TestNGAntBuildLogic = 3.0;
+        };
+    };
+
+    targets = {
+        ATACurriculumSustainabilityShipmentServiceTCTs-C2020July = { type = javalibrary; };
+    };
+};

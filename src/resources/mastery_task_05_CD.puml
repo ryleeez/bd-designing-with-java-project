@@ -1,0 +1,27 @@
+@startuml
+title Mastery Task 05
+
+'https://tiny.amazon.com/ppxdjujh/plancorpamazplanformencohtml
+
+interface CostStrategy<<interface>> {
+  +getName(): String
+  +getCost(ShipmentOption): ShipmentCost
+}
+
+class WeightedCostStrategy {
+  -Map<BigDecimal, List<CostStrategy>> strategies
+}
+
+class MonetaryCostStrategy {
+}
+
+class CarbonCostStrategy {
+}
+
+CostStrategy <|.. WeightedCostStrategy
+CostStrategy <|.. MonetaryCostStrategy
+CostStrategy <|.. CarbonCostStrategy
+
+WeightedCostStrategy o-- MonetaryCostStrategy
+WeightedCostStrategy o-- CarbonCostStrategy
+@enduml
