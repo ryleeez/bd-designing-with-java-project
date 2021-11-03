@@ -1,5 +1,5 @@
-import org.gradle.api.tasks.testing.logging.TestExceptionFormat
-import org.gradle.api.tasks.testing.logging.TestLogEvent
+//import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+//import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
     id 'java'
@@ -84,6 +84,14 @@ dependencies {
 
     implementation files("$rootDir/LibrariesAndUtilities/ATAResources.jar")
     implementation project('LibrariesAndUtilities:LessonPlanResources')
+
+    // Added by Frank
+    implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.1000')
+    implementation 'com.amazonaws:aws-java-sdk-s3'
+    implementation 'com.amazonaws:aws-lambda-java-core:1.2.1'
+    implementation 'com.amazonaws:aws-lambda-java-events:2.2.9'
+    runtimeOnly 'com.amazonaws:aws-lambda-java-log4j2:1.2.0'
+    // End of added by Frank
 }
 
 test {
@@ -96,24 +104,24 @@ test {
 
     testLogging {
         // set options for log level LIFECYCLE
-        events TestLogEvent.FAILED,
-                TestLogEvent.PASSED,
-                TestLogEvent.SKIPPED,
-                TestLogEvent.STANDARD_OUT
-        exceptionFormat TestExceptionFormat.FULL
-        showExceptions true
-        showCauses true
-        showStackTraces true
+//        events TestLogEvent.FAILED,       // commented out by Frank due to build error
+//                 TestLogEvent.PASSED,
+//                 TestLogEvent.SKIPPED,
+//                 TestLogEvent.STANDARD_OUT
+//        exceptionFormat TestExceptionFormat.FULL
+//       showExceptions true
+//       showCauses true
+//       showStackTraces true
 
         // set options for log level DEBUG and INFO
         debug {
-            events TestLogEvent.STARTED,
-                    TestLogEvent.FAILED,
-                    TestLogEvent.PASSED,
-                    TestLogEvent.SKIPPED,
-                    TestLogEvent.STANDARD_ERROR,
-                    TestLogEvent.STANDARD_OUT
-            exceptionFormat TestExceptionFormat.FULL
+//            events TestLogEvent.STARTED,
+//                    TestLogEvent.FAILED,
+//                    TestLogEvent.PASSED,
+//                    TestLogEvent.SKIPPED,
+//                    TestLogEvent.STANDARD_ERROR,
+//                    TestLogEvent.STANDARD_OUT
+//            exceptionFormat TestExceptionFormat.FULL
         }
         info.events = debug.events
         info.exceptionFormat = debug.exceptionFormat
