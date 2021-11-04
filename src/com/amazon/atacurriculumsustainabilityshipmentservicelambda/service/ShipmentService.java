@@ -1,6 +1,6 @@
 package com.amazon.atacurriculumsustainabilityshipmentservicelambda.service;
 
-import com.amazon.atacurriculumsustainabilityshipmentservicelambda.SustainabilityShipmentClientException;
+//import com.amazon.atacurriculumsustainabilityshipmentservicelambda.SustainabilityShipmentClientException;
 import com.amazon.atacurriculumsustainabilityshipmentservicelambda.cost.CostStrategy;
 import com.amazon.atacurriculumsustainabilityshipmentservicelambda.dao.PackagingDAO;
 import com.amazon.atacurriculumsustainabilityshipmentservicelambda.exceptions.NoPackagingFitsItemException;
@@ -10,8 +10,10 @@ import com.amazon.atacurriculumsustainabilityshipmentservicelambda.types.Item;
 import com.amazon.atacurriculumsustainabilityshipmentservicelambda.types.ShipmentCost;
 import com.amazon.atacurriculumsustainabilityshipmentservicelambda.types.ShipmentOption;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+//import org.apache.logging.log4j.LogManager;
+//import org.apache.logging.log4j.Logger;
+
+import org.apache.logging.log4j.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,7 +60,7 @@ public class ShipmentService {
             return getLowestCostShipmentOption(results);
         } catch (UnknownFulfillmentCenterException e) {
             log.error("PackagingDao threw an exception.", e);
-            throw new SustainabilityShipmentClientException(String.format("Unknown FC %s", fulfillmentCenter));
+            //throw new SustainabilityShipmentClientException(String.format("Unknown FC %s", fulfillmentCenter));
         } catch (NoPackagingFitsItemException e) {
             log.warn("Unable to find packaging option that will fit item," +
                 " returning a ShipmentOption with null packaging.", e);
@@ -68,6 +70,7 @@ public class ShipmentService {
                 .withPackaging(null)
                 .build();
         }
+        return null;  //Added by Frank due to compile error when throw was commented out
     }
 
     private ShipmentOption getLowestCostShipmentOption(List<ShipmentOption> results) {

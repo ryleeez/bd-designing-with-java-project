@@ -12,7 +12,7 @@ public class FulfillmentCenter {
     /**
      * The unique identifier code for a fulfillment center.
      */
-    private String fcCode;
+    private String fcCode;    // 4-chars where first 3 are airport code for nearest city (Frank)
 
     /**
      * Instantiates a new FulfillmentCenter object.

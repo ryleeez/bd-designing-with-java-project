@@ -12,7 +12,11 @@ import com.amazonaws.services.lambda.runtime.events.SQSEvent;
  * This is the entry point of the Lambda function. Each call will create a new instance.
  */
 //public class ShipmentServiceLambdaEntryPoint extends LambdaEntryPoint<ShipmentServiceLambdaRouter> {
-public class ShipmentServiceLambdaEntryPoint implements RequestHandler<SQSEvent, String>
+public class ShipmentServiceLambdaEntryPoint implements RequestHandler<SQSEvent, String> {
+    @Override
+    public String handleRequest(SQSEvent input, Context context) {
+        return "ShipmentServiceLambdaEntryPoint Ended";
+    }
 
 /**
  * Creates new ShipmentServiceLambdaEntryPoint.

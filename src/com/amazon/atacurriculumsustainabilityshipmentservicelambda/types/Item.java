@@ -10,7 +10,7 @@ public class Item {
     /**
      * The item's unique identifier.
      */
-    private String asin;
+    private String asin;   // Amazon Standard Identification Number - 10 alphanumeric characters (Frank)
 
     /**
      * A description of the item.
