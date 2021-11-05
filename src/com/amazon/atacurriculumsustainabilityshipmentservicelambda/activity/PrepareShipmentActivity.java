@@ -2,20 +2,22 @@ package com.amazon.atacurriculumsustainabilityshipmentservicelambda.activity;
 
 //import com.amazon.atacurriculumsustainabilityshipmentservicelambda.PrepareShipmentRequest;
 //import com.amazon.atacurriculumsustainabilityshipmentservicelambda.PrepareShipmentResponse;
+import com.amazon.atacurriculumsustainabilityshipmentservicelambda.cost.CarbonCostStrategy;
+import com.amazon.atacurriculumsustainabilityshipmentservicelambda.cost.CostStrategy;
+import com.amazon.atacurriculumsustainabilityshipmentservicelambda.dao.PackagingDAO;
+import com.amazon.atacurriculumsustainabilityshipmentservicelambda.datastore.PackagingDatastore;
 import com.amazon.atacurriculumsustainabilityshipmentservicelambda.service.ShipmentService;
 import com.amazon.atacurriculumsustainabilityshipmentservicelambda.types.FulfillmentCenter;
 import com.amazon.atacurriculumsustainabilityshipmentservicelambda.types.Item;
+import com.amazon.atacurriculumsustainabilityshipmentservicelambda.PrepareShipmentRequest;
 import com.amazon.atacurriculumsustainabilityshipmentservicelambda.types.ShipmentOption;
 
 //import com.amazon.bones.lambdarouter.LambdaActivityBase;
 //import com.amazon.bones.util.DataConverter;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.amazonaws.services.lambda.runtime.events.SQSEvent;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.math.BigDecimal;
 
 /**
  * PARTICIPANTS: You are not expected to modify or use this class directly. Please do not modify the code contained
@@ -25,11 +27,18 @@ import java.math.BigDecimal;
  * the appropriate shipment option.
  */
 public class PrepareShipmentActivity //  extends LambdaActivityBase<PrepareShipmentRequest, PrepareShipmentResponse>
-                      implements RequestHandler<SQSEvent, String> {
+                      implements RequestHandler<PrepareShipmentRequest, String> {
+
+    // Frank - Objects defined to get the code to work - used when defining ShipmentService
+    private PackagingDatastore dataStore = new PackagingDatastore();
+    private PackagingDAO packagingDAO = new PackagingDAO(dataStore);
+    private CostStrategy costStrategy = new CarbonCostStrategy();
+
     /**
      * Shipment service used to retrieve shipment options.
      */
-    private ShipmentService shipmentService;
+    //      ShipmentService(PackagingDAO packagingDAO, CostStrategy costStrategy)
+    private ShipmentService shipmentService = new ShipmentService(packagingDAO, costStrategy);
     /**
      * Data converter used to create shipment option JSON that is returned in the response.
      */
@@ -63,19 +72,40 @@ public class PrepareShipmentActivity //  extends LambdaActivityBase<PrepareShipm
     @Override
     // public PrepareShipmentResponse handleRequest(PrepareShipmentRequest request) throws Exception {
     // Not sure what/where PrepareShipmentResponse is defined or does
-        public String handleRequest(SQSEvent input, Context context) {
+    //     public String handleRequest(SQSEvent input, Context context) {
+        public String handleRequest(PrepareShipmentRequest request, Context context) {
+
+        // Frank - new request for testing
+        PrepareShipmentRequest testRequest = new PrepareShipmentRequest();
+
+        System.out.println("Processing request: " + request);
+
         Item item = Item.builder()    // Test item defined with constants (Frank)
-            .withAsin("Frank31952")
-            .withDescription("Frank Test Item")
-            // Need to find a way to handle BigDecimal validation - currently there is a problem with unmarshalling
-            // of GET requests that contain BigDecimal values as defined in the Coral model.
-            .withLength(new BigDecimal(10))
-            .withWidth(new BigDecimal(8))
-            .withHeight(new BigDecimal(4))
-            .build();
+                .withAsin(request.getAsin())
+                .withDescription(request.getDescription())
+                // Need to find a way to handle BigDecimal validation - currently there is a problem with unmarshalling
+                // of GET requests that contain BigDecimal values as defined in the Coral model.
+                .withLength(request.getLength())
+                .withWidth(request.getWidth())
+                .withHeight(request.getHeight())
+                .build();
+
+        System.out.println("Processing with Item: " + item);
+
+// **** Start of Franks hardcoded test data ****
+//        Item item = Item.builder()    // Test item defined with constants (Frank)
+//            .withAsin("Frank31952")
+//            .withDescription("Frank Test Item")
+//            // Need to find a way to handle BigDecimal validation - currently there is a problem with unmarshalling
+//            // of GET requests that contain BigDecimal values as defined in the Coral model.
+//            .withLength(new BigDecimal(10))
+//            .withWidth(new BigDecimal(8))
+//            .withHeight(new BigDecimal(4))
+//            .build();
+// **** End of Franks hardcoded test data ****
 
 
-        FulfillmentCenter fulfillmentCenter = new FulfillmentCenter("PHX3");   // Phoenix Fullfilment Center #3 (Frank)
+        FulfillmentCenter fulfillmentCenter = new FulfillmentCenter(request.getFcCode());   // Phoenix Fullfilment Center #3 (Frank)
 
         ShipmentOption shipmentOption = shipmentService.findShipmentOption(item, fulfillmentCenter);
 
