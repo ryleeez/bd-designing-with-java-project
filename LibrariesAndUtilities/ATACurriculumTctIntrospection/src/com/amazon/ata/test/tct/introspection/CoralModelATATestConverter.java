@@ -1,4 +1,4 @@
-package com.amazon.ata.test.tct.instrospection;
+package com.amazon.ata.test.tct.introspection;
 
 import com.amazon.ata.test.tct.introspection.types.TctId;
 import com.amazon.ata.test.tct.introspection.types.TctResult;

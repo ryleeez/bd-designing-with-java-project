@@ -4,6 +4,8 @@ package com.amazon.atacurriculumsustainabilityshipmentservicelambda;
  * Created by Frank to replace  the missing PrepareShipmentRequest class from ATA
  ***************************************************************************************************/
 
+import com.amazon.atacurriculumsustainabilityshipmentservicelambda.types.Item;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -59,13 +61,24 @@ public class PrepareShipmentRequest {
         }
 
 
-    public PrepareShipmentRequest(String asin, String description, BigDecimal length, BigDecimal width, BigDecimal height) {
+    public PrepareShipmentRequest(String asin, String description, BigDecimal length, BigDecimal width, BigDecimal height, String fcCode) {
         this.asin = asin;
         this.description = description;
         this.length = length;
         this.width = width;
         this.height = height;
+        this.fcCode = fcCode;
     }
+
+    public PrepareShipmentRequest(Builder builder) {
+        this.asin = builder.asin;;
+        this.description = builder.description;
+        this.length = builder.length;
+        this.width = builder.width;
+        this.height = builder.height;
+        this.fcCode = builder.fcCode;
+    }
+
     /****************************************************************************************************
      * getters/ setters
      ***************************************************************************************************/
@@ -144,4 +157,106 @@ public class PrepareShipmentRequest {
                 ", fcCode='" + fcCode + '\'' +
                 '}';
     }
+
+    /**
+     * Returns a new PrepareShipmentActivity.Builder object for constructing an Item.
+     *
+     * @return new builder ready for constructing a PrepeareShimentActivity
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
+    /****************************************************************************************************
+     * Builder inner class
+     ***************************************************************************************************/
+    /**
+     * {@code Builder builder static inner class.
+     */
+    public static final class Builder {
+        private String asin;
+        private String description;
+        private BigDecimal length;
+        private BigDecimal width;
+        private BigDecimal height;
+        private String fcCode;
+
+        private Builder() {
+        }
+
+        /**
+         * Sets the {@code asin} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param asinToUse the {@code asin} to set
+         * @return a reference to this Builder
+         */
+        public Builder withItemAsin(String asinToUse) {
+            this.asin = asinToUse;
+            return this;
+        }
+
+        /**
+         * Sets the {@code description} and returns a reference to this Builder so that the methods can be chained
+         * together.
+         *
+         * @param descriptionToUse the {@code description} to set
+         * @return a reference to this Builder
+         */
+        public Builder withItemDescription(String descriptionToUse) {
+            this.description = descriptionToUse;
+            return this;
+        }
+
+        /**
+         * Sets the {@code length} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param lengthToUse the {@code length} to set
+         * @return a reference to this Builder
+         */
+        public Builder withItemLength(String lengthToUse) {
+            this.length = new BigDecimal(lengthToUse);
+            return this;
+        }
+
+        /**
+         * Sets the {@code width} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param widthToUse the {@code width} to set
+         * @return a reference to this Builder
+         */
+        public Builder withItemWidth(String widthToUse) {
+            this.width = new BigDecimal(widthToUse);
+            return this;
+        }
+
+        /**
+         * Sets the {@code height} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param heightToUse the {@code height} to set
+         * @return a reference to this Builder
+         */
+        public Builder withItemHeight(String heightToUse) {
+            this.height = new BigDecimal(heightToUse);
+            return this;
+        }
+        /**
+         * Sets the {@code height} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param fcCode the {@code fcCode} to set
+         * @return a reference to this Builder
+         */
+        public Builder withFcCode(String fcCode) {
+            this.fcCode = fcCode;
+            return this;
+        }
+
+        /**
+         * Returns a {@code Item} built from the parameters previously set.
+         *
+         * @return a {@code Item} built with parameters of this {@code Item.Builder}
+         */
+        public PrepareShipmentRequest build() {
+            return new PrepareShipmentRequest(this);
+        }
+    }
+
 }

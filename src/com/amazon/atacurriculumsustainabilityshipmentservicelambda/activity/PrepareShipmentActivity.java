@@ -1,7 +1,7 @@
 package com.amazon.atacurriculumsustainabilityshipmentservicelambda.activity;
 
-//import com.amazon.atacurriculumsustainabilityshipmentservicelambda.PrepareShipmentRequest;
-//import com.amazon.atacurriculumsustainabilityshipmentservicelambda.PrepareShipmentResponse;
+import com.amazon.atacurriculumsustainabilityshipmentservicelambda.PrepareShipmentRequest;
+import com.amazon.atacurriculumsustainabilityshipmentservicelambda.PrepareShipmentResponse;
 import com.amazon.atacurriculumsustainabilityshipmentservicelambda.cost.CarbonCostStrategy;
 import com.amazon.atacurriculumsustainabilityshipmentservicelambda.cost.CostStrategy;
 import com.amazon.atacurriculumsustainabilityshipmentservicelambda.dao.PackagingDAO;
@@ -9,7 +9,6 @@ import com.amazon.atacurriculumsustainabilityshipmentservicelambda.datastore.Pac
 import com.amazon.atacurriculumsustainabilityshipmentservicelambda.service.ShipmentService;
 import com.amazon.atacurriculumsustainabilityshipmentservicelambda.types.FulfillmentCenter;
 import com.amazon.atacurriculumsustainabilityshipmentservicelambda.types.Item;
-import com.amazon.atacurriculumsustainabilityshipmentservicelambda.PrepareShipmentRequest;
 import com.amazon.atacurriculumsustainabilityshipmentservicelambda.types.ShipmentOption;
 
 //import com.amazon.bones.lambdarouter.LambdaActivityBase;
@@ -73,7 +72,8 @@ public class PrepareShipmentActivity //  extends LambdaActivityBase<PrepareShipm
     // public PrepareShipmentResponse handleRequest(PrepareShipmentRequest request) throws Exception {
     // Not sure what/where PrepareShipmentResponse is defined or does
     //     public String handleRequest(SQSEvent input, Context context) {
-        public String handleRequest(PrepareShipmentRequest request, Context context) {
+         public String handleRequest(PrepareShipmentRequest request, Context context) {
+    //   public PrepareShipmentResponse handleRequest(PrepareShipmentRequest request, Context context) {
 
         // Frank - new request for testing
         PrepareShipmentRequest testRequest = new PrepareShipmentRequest();
@@ -83,8 +83,6 @@ public class PrepareShipmentActivity //  extends LambdaActivityBase<PrepareShipm
         Item item = Item.builder()    // Test item defined with constants (Frank)
                 .withAsin(request.getAsin())
                 .withDescription(request.getDescription())
-                // Need to find a way to handle BigDecimal validation - currently there is a problem with unmarshalling
-                // of GET requests that contain BigDecimal values as defined in the Coral model.
                 .withLength(request.getLength())
                 .withWidth(request.getWidth())
                 .withHeight(request.getHeight())
@@ -108,13 +106,15 @@ public class PrepareShipmentActivity //  extends LambdaActivityBase<PrepareShipm
         FulfillmentCenter fulfillmentCenter = new FulfillmentCenter(request.getFcCode());   // Phoenix Fullfilment Center #3 (Frank)
 
         ShipmentOption shipmentOption = shipmentService.findShipmentOption(item, fulfillmentCenter);
+        System.out.println("shipmentOption: " + shipmentOption);
+        if (shipmentOption == null) return null;
 
         // Converting the shipmentOption to JSON to simplify inheritance related issues
         //String shipmentOptionJSON = converter.toJson(shipmentOption);
 
         // Code added by Frank to replace converter call above to generate json from shipmentOption
         ObjectMapper objectMapper = new ObjectMapper();
-        String shipmentOptionJSON = null;
+        String shipmentOptionJSON = "wtf";
         try {
             shipmentOptionJSON = objectMapper.writeValueAsString(shipmentOption);
         } catch (JsonProcessingException e) {
@@ -125,6 +125,7 @@ public class PrepareShipmentActivity //  extends LambdaActivityBase<PrepareShipm
 //        return PrepareShipmentResponse.builder()
 //            .withAttributes(shipmentOptionJSON)
 //            .build();
+        System.out.println("Returning: " + shipmentOptionJSON);
         return shipmentOptionJSON;
     }
 }
