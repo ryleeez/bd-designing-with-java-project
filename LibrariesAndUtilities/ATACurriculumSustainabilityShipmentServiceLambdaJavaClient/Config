@@ -8,7 +8,7 @@ package.ATACurriculumSustainabilityShipmentServiceLambdaJavaClient = {
     deploy = {
         generic = true;
         map = (default,
-            "-generated-test/**",
+            "-generated-tst/**",
             "-copied-tst/**",
             "-smoketests/**",
             "-src-files/**");
@@ -21,7 +21,7 @@ package.ATACurriculumSustainabilityShipmentServiceLambdaJavaClient = {
 
     scope = interface;
 
-    test-dependencies = {
+    tst-dependencies = {
         C2020July = {
             junit = 4;
 

@@ -5,9 +5,6 @@ plugins {
     id 'java'
     id 'checkstyle'
     id 'jacoco'
-    id 'com.github.spotbugs' version '4.7.1'
-    id 'com.adarshr.test-logger' version '3.0.0'
-    id 'com.github.johnrengelman.shadow' version '7.0.0'
 }
 
 repositories {
@@ -60,23 +57,7 @@ sourceSets {
     }
 }
 
-spotbugs {
-    spotbugsTest.enabled = false
-    ignoreFailures = true
-}
-
-spotbugsMain {
-    reports {
-        html {
-            enabled = true
-        }
-    }
-}
-
 dependencies {
-    implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.1000')
-    implementation 'com.amazonaws:aws-java-sdk-s3'
-
     implementation 'org.junit.jupiter:junit-jupiter:5.7.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
@@ -84,22 +65,21 @@ dependencies {
     implementation 'com.google.guava:guava:30.1.1-jre'
 
     testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.10.0'
+    implementation group: 'org.mockito', name: 'mockito-all', version: '2.0.2-beta'
 
-    implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.1000')
-    implementation 'com.amazonaws:aws-java-sdk-s3'
-    implementation 'com.amazonaws:aws-lambda-java-core:1.2.1'
-    implementation 'com.amazonaws:aws-lambda-java-events:2.2.9'
-    runtimeOnly 'com.amazonaws:aws-lambda-java-log4j2:1.2.0'
-    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.8'
-    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.8'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-1.2-api', version: '2.14.1'
 
     implementation group: 'org.reflections', name: 'reflections', version: '0.9.12'
 
-    implementation files("$rootDir/LibrariesAndUtilities/ATAResources.jar")
-    implementation project('LibrariesAndUtilities:LessonPlanResources')
-    implementation project('LibrariesAndUtilities:ATACurriculumTestInfrastructure')
-    implementation project('LibrariesAndUtilities:ATACurriculumSustainabilityShipmentServiceIntrospectionTests')
-    implementation project('LibrariesAndUtilities:ATACurriculumSustainabilityShipmentServiceLambdaJavaClient')
+
+    implementation project(":LibrariesAndUtilities:ATACurriculumTestInfrastructure")
+
+
+
+
+//    implementation files("$rootDir/LibrariesAndUtilities/ATAResources.jar")
+//    implementation project('LibrariesAndUtilities:LessonPlanResources')
 }
 
 test {
