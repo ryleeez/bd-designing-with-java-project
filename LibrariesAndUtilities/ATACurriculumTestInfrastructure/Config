@@ -16,7 +16,7 @@ package.ATACurriculumTestInfrastructure = {
         };
     };
 
-    test-dependencies = {
+    tst-dependencies = {
         1.0 = {
         };
     };

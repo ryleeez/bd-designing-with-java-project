@@ -1,57 +1,31 @@
-// Applies BrazilGradle plugin then uses it to setup the build script classpath.
-buildscript {
-  apply plugin: 'brazil-gradle'
-  dependencies {
-    classpath brazilGradle.tool('BrazilGradleQualityDefaults')
-  }
-}
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
 
-/*
- Applies core Gradle plugins, which are ones built into Gradle itself.
-*/
 plugins {
-  // Java for compile and unit test of Java source files. Read more at:
-  // https://docs.gradle.org/current/userguide/java_plugin.html
   id 'java'
-
-  // Checkstyle for style checks and reports on Java source files. Read more at:
-  // https://docs.gradle.org/current/userguide/checkstyle_plugin.html
   id 'checkstyle'
-
-  // JaCoCo for coverage metrics and reports of Java source files. Read more at:
-  // https://docs.gradle.org/current/userguide/jacoco_plugin.html
   id 'jacoco'
 }
 
-/*
- Applies community Gradle plugins, usually added as build-tools in Config.
-*/
-
-// BrazilGradleQualityDefaults for enabling brazil specific quality rules and
-// reports for other quality plugins. Read more at:
-// https://w.amazon.com/bin/view/BrazilGradle/QualityDefaults
-apply plugin: 'brazil-quality-defaults'
-
-// SpotBugs for quality checks and reports of source files. Read more at:
-// https://spotbugs.readthedocs.io/en/stable/gradle.html
-apply plugin: 'com.github.spotbugs'
-
-/*
- Configures the Checkstyle "checkstyle" plugin. Remove this and the plugin if
- you want to skip these checks and report generation.
-*/
-checkstyle {
-  sourceSets = [sourceSets.main]
-  configFile = file("${brazilGradle.path('[ATACheckstyle]pkg.src')}/configuration/checkstyle/checkstyle.xml")
-  ignoreFailures = false
+repositories {
+  mavenCentral()
 }
 
-/*
- Configures the JaCoCo "jacoco" plugin. Remove this if you want to skip
- these checks and report generation.
+checkstyle {
+//    sourceSets = [sourceSets.main, sourceSets.test]
+  sourceSets = [sourceSets.main]
+  configFile = file("$rootDir/LibrariesAndUtilities/ATACheckstyle/configuration/checkstyle/checkstyle.xml")
+  configProperties.put('checkstyle.suppression.filter', "$rootDir/LibrariesAndUtilities/ATACheckstyle/configuration/checkstyle/suppressions.xml")
+  ignoreFailures = true
+}
 
- Set minimum code coverage to fail build, where 0.01 = 1%.
-*/
+tasks.withType(Checkstyle) {
+  reports {
+    xml.enabled false
+    html.enabled true
+  }
+}
+
 check.dependsOn jacocoTestCoverageVerification
 jacocoTestCoverageVerification {
   violationRules {
@@ -63,34 +37,99 @@ jacocoTestCoverageVerification {
   }
 }
 
-test {
-  exclude 'com/amazon/ata/test/junit/tests/**'
+// for use with the Gradle Java Plugin
+sourceSets {
+  main {
+    java {
+      srcDirs = ['src/']
+    }
+    resources {
+      srcDirs = ['src/resources/']
+    }
+  }
+  test {
+    java {
+      srcDirs = ['tst/']
+    }
+    resources {
+      srcDirs = ['tst/resources/']
+    }
+  }
 }
 
-/*
- Configures the SpotBugs "com.github.spotbugs" plugin. Remove this and the
- plugin to skip these checks and report generation.
-*/
-spotbugs {
-  sourceSets = [sourceSets.main]
-  ignoreFailures = false
-}
-
-/*
- Resolve build and test dependencies using BrazilGradle.
-*/
 dependencies {
-  implementation brazilGradle.build()
-  testImplementation brazilGradle.testbuild()
+  implementation 'org.junit.jupiter:junit-jupiter:5.7.2'
+  testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
+  testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
+
+  implementation group: 'org.junit.platform', name: 'junit-platform-engine', version: '1.6.0-M1'
+  implementation group: 'org.junit.platform', name: 'junit-platform-launcher', version: '1.8.1'
+
+  implementation group: 'org.reflections', name: 'reflections', version: '0.9.12'
+
+  implementation 'com.google.guava:guava:30.1.1-jre'
+
+  implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+  implementation group: 'commons-io', name: 'commons-io', version: '2.6'
+
+  implementation group: 'org.mockito', name: 'mockito-core', version: '3.10.0'
+
 }
 
-/*
- Specifies that JUnit Platform (a.k.a. JUnit 5) should be used to execute tests.
-
- For mixed JUnit 4 and 5 tests, add 'JUnit-4-12-migration = 5.x;' to
- test-dependencies in Config.
-*/
 test {
   useJUnitPlatform()
+
+  testlogger {
+    theme 'plain'
+    logLevel 'quiet'
+  }
+
+  testLogging {
+    // set options for log level LIFECYCLE
+    events TestLogEvent.FAILED,
+            TestLogEvent.PASSED,
+            TestLogEvent.SKIPPED,
+            TestLogEvent.STANDARD_OUT
+    exceptionFormat TestExceptionFormat.FULL
+    showExceptions true
+    showCauses true
+    showStackTraces true
+
+    // set options for log level DEBUG and INFO
+    debug {
+      events TestLogEvent.STARTED,
+              TestLogEvent.FAILED,
+              TestLogEvent.PASSED,
+              TestLogEvent.SKIPPED,
+              TestLogEvent.STANDARD_ERROR,
+              TestLogEvent.STANDARD_OUT
+      exceptionFormat TestExceptionFormat.FULL
+    }
+    info.events = debug.events
+    info.exceptionFormat = debug.exceptionFormat
+
+    afterSuite { desc, result ->
+      if (!desc.parent) { // will match the outermost suite
+        def output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} successes, ${result.failedTestCount} failures, ${result.skippedTestCount} skipped)"
+        def startItem = '|  ', endItem = '  |'
+        def repeatLength = startItem.length() + output.length() + endItem.length()
+        println('\n' + ('-' * repeatLength) + '\n' + startItem + output + endItem + '\n' + ('-' * repeatLength))
+
+        def scoringPercentage = 10 - result.failedTestCount
+        scoringPercentage = scoringPercentage / 10
+        println("Exit Result for Scoring: " + scoringPercentage)
+      }
+    }
+  }
 }
 
+project.configurations.implementation.setCanBeResolved(true)
+jar {
+  manifest {
+    attributes(
+            "Main-Class": "",
+            "Class-Path": configurations.implementation.collect { it.name }.join(' ')
+    )
+  }
+  dependsOn('dependencies')
+}
