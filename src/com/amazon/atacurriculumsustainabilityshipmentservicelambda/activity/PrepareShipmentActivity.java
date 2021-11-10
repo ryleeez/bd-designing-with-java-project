@@ -78,7 +78,7 @@ public class PrepareShipmentActivity //  extends LambdaActivityBase<PrepareShipm
         // Frank - new request for testing
         PrepareShipmentRequest testRequest = new PrepareShipmentRequest();
 
-        System.out.println("Processing request: " + request);
+        System.out.println("Frank - 11-10-2021-Processing request: " + request);
 
         Item item = Item.builder()    // Test item defined with constants (Frank)
                 .withAsin(request.getAsin())
