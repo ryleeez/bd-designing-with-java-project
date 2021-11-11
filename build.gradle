@@ -34,7 +34,7 @@ jacocoTestCoverageVerification {
     violationRules {
         rule {
             limit {
-                minimum = 0.50
+                minimum = 0.80
             }
         }
     }
@@ -84,6 +84,8 @@ dependencies {
 
     implementation files("$rootDir/LibrariesAndUtilities/ATAResources.jar")
     implementation project('LibrariesAndUtilities:LessonPlanResources')
+    implementation project('LibrariesAndUtilities:ATACurriculumTestInfrastructure')
+    implementation project('LibrariesAndUtilities:ATACurriculumSustainabilityShipmentServiceIntrospectionTests')
 
     // Added for AWS Lambda Functions
     implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.1000')

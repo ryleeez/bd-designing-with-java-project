@@ -1,14 +1,11 @@
 package com.amazon.atacurriculumsustainabilityshipmentservicelambda.activity;
 
-import com.amazon.atacurriculumsustainabilityshipmentservicelambda.PrepareShipmentRequest;
-import com.amazon.atacurriculumsustainabilityshipmentservicelambda.PrepareShipmentResponse;
 import com.amazon.atacurriculumsustainabilityshipmentservicelambda.service.ShipmentService;
 
 import com.amazon.atacurriculumsustainabilityshipmentservicelambda.types.FulfillmentCenter;
 import com.amazon.atacurriculumsustainabilityshipmentservicelambda.types.Item;
 import com.amazon.atacurriculumsustainabilityshipmentservicelambda.types.ShipmentOption;
 
-import com.amazonaws.services.lambda.runtime.Context;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

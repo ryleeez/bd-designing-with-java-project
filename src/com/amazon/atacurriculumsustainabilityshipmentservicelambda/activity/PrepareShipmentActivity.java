@@ -1,6 +1,5 @@
 package com.amazon.atacurriculumsustainabilityshipmentservicelambda.activity;
 
-import com.amazon.atacurriculumsustainabilityshipmentservicelambda.PrepareShipmentRequest;
 import com.amazon.atacurriculumsustainabilityshipmentservicelambda.cost.CarbonCostStrategy;
 import com.amazon.atacurriculumsustainabilityshipmentservicelambda.cost.CostStrategy;
 import com.amazon.atacurriculumsustainabilityshipmentservicelambda.dao.PackagingDAO;
