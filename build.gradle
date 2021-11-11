@@ -1,5 +1,5 @@
-import org.gradle.api.tasks.testing.logging.TestExceptionFormat
-import org.gradle.api.tasks.testing.logging.TestLogEvent
+//import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+//import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
     id 'java'
@@ -74,9 +74,6 @@ spotbugsMain {
 }
 
 dependencies {
-    implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.1000')
-    implementation 'com.amazonaws:aws-java-sdk-s3'
-
     implementation 'org.junit.jupiter:junit-jupiter:5.7.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
@@ -85,21 +82,20 @@ dependencies {
 
     testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.10.0'
 
+    implementation files("$rootDir/LibrariesAndUtilities/ATAResources.jar")
+    implementation project('LibrariesAndUtilities:LessonPlanResources')
+
+    // Added for AWS Lambda Functions
     implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.1000')
     implementation 'com.amazonaws:aws-java-sdk-s3'
     implementation 'com.amazonaws:aws-lambda-java-core:1.2.1'
     implementation 'com.amazonaws:aws-lambda-java-events:2.2.9'
     runtimeOnly 'com.amazonaws:aws-lambda-java-log4j2:1.2.0'
-    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.8'
-    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.8'
 
-    implementation group: 'org.reflections', name: 'reflections', version: '0.9.12'
+    // Added for using log4j usage
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.14.1'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.14.1'
 
-    implementation files("$rootDir/LibrariesAndUtilities/ATAResources.jar")
-    implementation project('LibrariesAndUtilities:LessonPlanResources')
-    implementation project('LibrariesAndUtilities:ATACurriculumTestInfrastructure')
-    implementation project('LibrariesAndUtilities:ATACurriculumSustainabilityShipmentServiceIntrospectionTests')
-    implementation project('LibrariesAndUtilities:ATACurriculumSustainabilityShipmentServiceLambdaJavaClient')
 }
 
 test {
@@ -111,25 +107,15 @@ test {
     }
 
     testLogging {
-        // set options for log level LIFECYCLE
-        events TestLogEvent.FAILED,
-                TestLogEvent.PASSED,
-                TestLogEvent.SKIPPED,
-                TestLogEvent.STANDARD_OUT
-        exceptionFormat TestExceptionFormat.FULL
-        showExceptions true
-        showCauses true
-        showStackTraces true
-
         // set options for log level DEBUG and INFO
         debug {
-            events TestLogEvent.STARTED,
-                    TestLogEvent.FAILED,
-                    TestLogEvent.PASSED,
-                    TestLogEvent.SKIPPED,
-                    TestLogEvent.STANDARD_ERROR,
-                    TestLogEvent.STANDARD_OUT
-            exceptionFormat TestExceptionFormat.FULL
+//            events TestLogEvent.STARTED,
+//                    TestLogEvent.FAILED,
+//                    TestLogEvent.PASSED,
+//                    TestLogEvent.SKIPPED,
+//                    TestLogEvent.STANDARD_ERROR,
+//                    TestLogEvent.STANDARD_OUT
+//            exceptionFormat TestExceptionFormat.FULL
         }
         info.events = debug.events
         info.exceptionFormat = debug.exceptionFormat

@@ -10,5 +10,6 @@
 rootProject.name = 'GradleATACurriculumSustainabilityShipmentServiceLambdaSolution'
 include 'LibrariesAndUtilities:LessonPlanResources'
 include 'LibrariesAndUtilities:ATACurriculumTestInfrastructure'
-include 'LibrariesAndUtilities:ATACurriculumSustainabilityShipmentServiceIntrospectionTests'
-include 'LibrariesAndUtilities:ATACurriculumSustainabilityShipmentServiceLambdaJavaClient'
+include 'LibrariesAndUtilities:ATAIntegrationTestInfrastructure'
+include 'LibrariesAndUtilities:ATACurriculumTctIntrospectionModel'
+include 'LibrariesAndUtilities:ATACurriculumTctIntrospection'

@@ -3,15 +3,15 @@
         "-//Puppy Crawl//DTD Suppressions 1.2//EN"
         "http://checkstyle.org/dtds/suppressions_1_2.dtd">
 <suppressions>
-    <!-- at least one project tst in non-tst dir, non-tst package -->
+    <!-- at least one project test in non-test dir, non-test package -->
     <suppress checks="(Javadoc|MethodName|AvoidStaticImport)" files=".*Test.java" />
     <suppress checks="(Javadoc|MethodName|AvoidStaticImport)" files=".*Tests.java" />
     <!-- gradle -->
-    <suppress checks="(Javadoc|MethodName|AvoidStaticImport)" files="src/tst/java" />
+    <suppress checks="(Javadoc|MethodName|AvoidStaticImport)" files="src/test/java" />
     <!-- HT -->
     <suppress checks="(Javadoc|MethodName|AvoidStaticImport)" files="tst/com/amazon" />
     <!-- integration tests -->
-    <suppress checks="(Javadoc|MethodName|AvoidStaticImport)" files="src/com/amazon/.*/tst/" />
+    <suppress checks="(Javadoc|MethodName|AvoidStaticImport)" files="src/com/amazon/.*/test/" />
     <suppress checks="EqualsHashCodeCheck" files="_U1/src/com/amazon/ata" />
     <suppress checks="FinalLocalVariable" files="_U1/src/com/amazon/ata" />
     <!-- non-source files in src dirs -->

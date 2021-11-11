@@ -7,8 +7,7 @@ import com.amazon.atacurriculumsustainabilityshipmentservicelambda.service.Shipm
 import com.amazon.atacurriculumsustainabilityshipmentservicelambda.types.FulfillmentCenter;
 import com.amazon.atacurriculumsustainabilityshipmentservicelambda.types.Item;
 import com.amazon.atacurriculumsustainabilityshipmentservicelambda.types.ShipmentOption;
-//import com.amazon.bones.util.DataConverter;
-//import com.amazon.bones.util.DataConverterImpl;
+
 import com.amazonaws.services.lambda.runtime.Context;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,8 +30,6 @@ public class PrepareShipmentActivityTest {
         .withItemHeight("10.0")
         .build();
 
-    //private DataConverter dataConverter = new DataConverterImpl();
-
     @Mock
     private ShipmentService shipmentService;
 
@@ -44,17 +41,13 @@ public class PrepareShipmentActivityTest {
     @Test
     public void handleRequest_noAvailableShipmentOption_returnsNull() throws Exception {
         // GIVEN
-//        PrepareShipmentActivity activity = new PrepareShipmentActivity(shipmentService, dataConverter);
         PrepareShipmentActivity activity = new PrepareShipmentActivity(shipmentService);
         when(shipmentService.findShipmentOption(any(Item.class), any(FulfillmentCenter.class))).thenReturn(null);
 
         // WHEN
-        //PrepareShipmentResponse response = activity.handleRequest(request);
-
-        String response = activity.handleRequest(request, null);  // Frank - null used because I don't know what else to code
+        String response = activity.handleRequest(request, null);
 
         // THEN
-        //assertNull(response.getAttributes());
         assertNull(response);
     }
 
@@ -68,7 +61,7 @@ public class PrepareShipmentActivityTest {
 
         // WHEN
         // PrepareShipmentResponse response = activity.handleRequest(request);
-        String response = activity.handleRequest(request, null);// Frank - null used because I don't know what else to code
+        String response = activity.handleRequest(request, null);
 
 
         // THEN

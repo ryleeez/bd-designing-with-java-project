@@ -8,9 +8,9 @@ import java.math.BigDecimal;
 public class Item {
 
     /**
-     * The item's unique identifier.
+     * The item's unique identifier - Amazon Standard Identification Number - 10 alphanumeric characters.
      */
-    private String asin;   // Amazon Standard Identification Number - 10 alphanumeric characters (Frank)
+    private String asin;
 
     /**
      * A description of the item.

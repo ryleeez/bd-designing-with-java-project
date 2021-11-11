@@ -29,7 +29,7 @@ package.ATACurriculumSustainabilityShipmentServiceIntrospectionTests = {
         };
     };
 
-    tst-dependencies = {
+    test-dependencies = {
         C2020July = {
         };
     };

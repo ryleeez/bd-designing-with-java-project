@@ -70,7 +70,7 @@ public class ShipmentService {
                 .withPackaging(null)
                 .build();
         }
-        return null;  //Added by Frank due to compile error when throw was commented out
+        return null;
     }
 
     private ShipmentOption getLowestCostShipmentOption(List<ShipmentOption> results) {

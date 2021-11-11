@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definition assembly="com.amazon.atacurriculumsustainabilityshipmentservicelambda" version="1.0">
+
+    <documentation target="ATACurriculumSustainabilityShipmentService">
+        ATA Fake of the SustainabilityShipmentService to be used in learning projects.
+    </documentation>
+
+    <service name="ATACurriculumSustainabilityShipmentService">
+        <operation target="PrepareShipment"/>
+        <operation target="com.amazon.ata.test.tct.introspection.types#ExecuteTctSuite"/>
+    </service>
+
+    <documentation target="PrepareShipment">
+        Finds a shipment option for the specified item and fulfillment center.
+    </documentation>
+
+    <operation name="PrepareShipment">
+        <input target="PrepareShipmentRequest"/>
+        <output target="PrepareShipmentResponse"/>
+        <error target="SustainabilityShipmentServiceException"/>
+        <error target="SustainabilityShipmentClientException"/>
+    </operation>
+    <http target="PrepareShipment">
+        <verb value="GET"/>
+        <uri value="shipments?fcCode={fcCode}&amp;itemAsin={itemAsin}&amp;itemDescription={itemDescription}&amp;itemLength={itemLength}&amp;itemWidth={itemWidth}&amp;itemHeight={itemHeight}"/>
+    </http>
+
+    <!--
+      Service data-type definitions
+      -->
+
+    <!-- Primitive types used by other structures. These can be
+         mapped to the Java object if you want to return null values. -->
+
+    <string name="stringValue"/>
+    <boolean name="boolean"/>
+
+    <string name="nonEmptyStringValue"/>
+    <length target="nonEmptyStringValue">
+        <min value="1"/>
+    </length>
+
+    <!-- Structures -->
+
+    <!-- List definition and structure -->
+
+    <structure name="PrepareShipmentRequest">
+        <member name="fcCode" target="nonEmptyStringValue"/>
+        <member name="itemAsin" target="nonEmptyStringValue"/>
+        <member name="itemDescription" target="nonEmptyStringValue"/>
+        <member name="itemLength" target="nonEmptyStringValue"/>
+        <member name="itemWidth" target="nonEmptyStringValue"/>
+        <member name="itemHeight" target="nonEmptyStringValue"/>
+    </structure>
+    <httplabel target="PrepareShipmentRequest$fcCode">
+        <label value="fcCode"/>
+    </httplabel>
+    <httplabel target="PrepareShipmentRequest$itemAsin">
+        <label value="itemAsin"/>
+    </httplabel>
+    <httplabel target="PrepareShipmentRequest$itemDescription">
+        <label value="itemDescription"/>
+    </httplabel>
+    <httplabel target="PrepareShipmentRequest$itemLength">
+        <label value="itemLength"/>
+    </httplabel>
+    <httplabel target="PrepareShipmentRequest$itemWidth">
+        <label value="itemWidth"/>
+    </httplabel>
+    <httplabel target="PrepareShipmentRequest$itemHeight">
+        <label value="itemHeight"/>
+    </httplabel>
+
+    <structure name="PrepareShipmentResponse">
+        <member name="attributes" target="stringValue" />
+    </structure>
+
+    <string name="errorMessage"/>
+
+    <!-- Exception definitions -->
+    <documentation target="SustainabilityShipmentClientException">
+        Represents exceptions caused by the client.
+    </documentation>
+    <structure name="SustainabilityShipmentClientException">
+        <member name="message" target="errorMessage"/>
+    </structure>
+
+    <exception target="SustainabilityShipmentClientException"/>
+    <httperror target="SustainabilityShipmentClientException">
+        <httpresponsecode value="400"/>
+    </httperror>
+
+    <documentation target="SustainabilityShipmentServiceException">
+        Represents exceptions that have occurred due to an internal failure.
+    </documentation>
+    <structure name="SustainabilityShipmentServiceException">
+        <member name="message" target="errorMessage"/>
+    </structure>
+
+    <exception target="SustainabilityShipmentServiceException"/>
+    <httperror target="SustainabilityShipmentServiceException">
+        <httpresponsecode value="500"/>
+    </httperror>
+</definition>

@@ -10,8 +10,6 @@ mounts/events/prepare_shipment.json
 # Ignore Gradle build output directory
 build
 
-#Franks additions to gitignore follow
-
 #ignore thumbnails created by windows
 Thumbs.db
 #Ignore files build by Visual Studio
