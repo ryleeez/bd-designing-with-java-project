@@ -1,1 +1,0 @@
-01 Jul 2020 21:45:52,111 [INFO ]  (main) com.amazon.atacurriculumsustainabilityshipmentservicelambda.service.ShipmentService:51: Got Item{asin='0132350882', description='Clean Code', length=7.0, width=1.2, height=9.2}, FulfillmentCenter{fcCode='IND1'}

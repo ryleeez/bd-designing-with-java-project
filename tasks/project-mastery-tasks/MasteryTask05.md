@@ -30,10 +30,7 @@ If you'd like to learn more about the Strategy Design Pattern, we recommend
 of this article, `CostStrategy` is our *Strategy* interface, and both `MonetaryCostStrategy` and `CarbonCostStrategy`
 are our concrete strategy classes. The `ShipmentService` class is our *Context* class.
 
-&nbsp;
-
 ### Milestone 1:  At What Cost?
-**Reviewer: Near-peer Reviewer**
 
 You confer with your Data Engineering team, who crunch the numbers and determine that **all** the current *and*
 expected cost types can be calculated from two measurements: the amount of material (grams of mass) in the packaging
@@ -56,9 +53,7 @@ carbon credits we are using by 98%!
 Implement the `CarbonCostStrategy` in the `strategy` package using these formulas and write unit tests to verify they
 work.
 
-The `tct-task5-carbon` workflow should pass. Create a CR with the tags `[MT05][Carbon]` for your Near-peer Reviewer.
-
-&nbsp;
+When you are done, check that the `MT5CarbonIntrospectionTests` tests pass.
 
 ### Milestone 2: Designing a Blended Cost
 **Reviewer: Project Buddy**
@@ -75,6 +70,8 @@ You *Disagree and Commit*, put aside your personal opinions about the appropriat
 code. Create a class diagram to represent your design for a `WeightedCostStrategy`. Create a
 new file in the `src/resources` directory called `mastery_task_05_CD.puml` with the PlantUML.
 
+When you are done, check that the `MT5DesignIntrospectionTests` tests pass.
+
 **Optional Side Quest: Future Costs**
 
 Rather than hard-coding the 80/20 split, your `WeightedCostStrategy` would be more flexible if it accepted any number
@@ -82,14 +79,6 @@ of `CostStrategy` objects, each with its own weight. You could use a Builder pat
 Our Promise!* project, with an `addStrategyWithWeight(CostStrategy, BigDecimal)` method to make it obvious which weights
 went with each strategy; that would also let you guarantee the calling code had provided at least one strategy. This
 will require a little more code, but it will also make it easy to change the cost calculation in the future.
-
-&nbsp;
-
-Send these designs to your project buddy for review before diving into writing the code. The `tct-task5-design`
-workflow should pass. Create a CR with the tags `[MT05][Design]`. Once your project buddy has
-approved the CR, push your diagrams and begin working on the next milestone.
-
-&nbsp;
 
 ### Milestone 3: Composing the Cost
 **Reviewer: Project Buddy**
@@ -116,13 +105,8 @@ Add new `PolyBag` `FcPackagingOption`s to the `PackagingDatastore`, using the FC
 Implement your design for the `WeightedCostStrategy` in the `strategy` package. Update the `getCostStrategy()` method
 in the `App` class to return your newly created `WeightedCostStrategy` instead of a `MonetaryCostStrategy`.
 
-The `tct-task5-weighted` workflow should pass. Create a CR with the tags `[MT05][Weighted]` for your Project Buddy.
-
-&nbsp;
+When you are done, check that the `MT5WegithedIntrospectionTests` tests all pass.
 
 **Exit Checklist**
-- `rde wflow run tct-task5` passes
-- Your implementation of the `CarbonCostStrategy` has been code reviewed and approved
-- You have designed the `WeightedCostStrategy`
-- You've added the new `PolyBag`s to the `PackagingDatastore`
-- Your implementation of the `WeightedCostStrategy` has been code reviewed and approved
+- `./gradlew -q clean :test --tests 'tct.MT5*'` passes
+- `./gradlew -q clean :test --tests 'com.amazon.ata.*'` passes

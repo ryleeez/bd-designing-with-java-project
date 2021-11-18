@@ -1,3 +1,0 @@
-Status Code:  400
-Error Type:  SustainabilityShipmentClientException
-Message:  1 validation error detected: Value '' at 'fcCode' failed to satisfy constraint: Member must have length greater than or equal to 1

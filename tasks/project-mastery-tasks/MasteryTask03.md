@@ -13,11 +13,10 @@ team that the first FC with polybags is going to onboard soon, and we need to pr
 &nbsp;
 
 ### Milestone 1: Design
-**Reviewer: Near-peer Reviewer**
 
 You should plan for at least two new packaging types: `Box` and `PolyBag`. We'd like to update our service to support
 these new and future packaging types without requiring changes to the `PackagingDao`, `FcPackagingOption`, or the 
-`ShipmentService`. We know that no other teams use our `types` Java package, so it’s safe to change any of its classes. 
+`ShipmentService`. We can do this by extending from the `Packaging` class. We know that no other teams use our `types` Java package, so it’s safe to change any of its classes. 
 Both `Box` and `PolyBag` will both need to implement the methods `canFitItem()` and `getMass()`, which are used in 
 determining the best shipment option. Below are details about how to calculate each.
 
@@ -35,11 +34,17 @@ overlapping flaps and only considering the exposed area, as represented by this 
     mass = endsArea + shortSidesArea + longSidesArea;
 ```
 
+**HINT:** Remember that with BigDecimals, we can't use +, *, -, /, etc operators. Instead, we must use the class methods
+`add`, `multiply`, etc. Addtionally we can turn an integer into a BigDecimal using the static `valueOf` method.
+
 A `PolyBag` is made of `LAMINATED_PLASTIC`; has a fixed `volume` (in cubic centimeters); and can fit any `Item` whose
 volume (length \* width \* height) is smaller than the bag’s volume. (The actual formula is quite complicated, but 
-volume is a reasonable approximation in most cases.) A `PolyBag` has mass that is a bit more compilcated to derive.
-Rather than boring you with a bunch of math, the Data Engineering team just hands you this code, which they say 
-gets "close enough":
+volume is a reasonable approximation in most cases.) Note that a polybag therefore should not have a `length`, `width`,
+or `height` property, so we'll need to remove the fields from the `Packaging` parent class and move them to the new
+`Box` class.
+ 
+A `PolyBag` has mass that is a bit more compilcated to derive. The Data Engineering team handed you this code, which 
+they say gets "close enough":
 
 ```
     mass = Math.ceil(Math.sqrt(volume) x 0.6);
@@ -53,21 +58,18 @@ the changes you plan to make to the `types` package. This should include any cla
 relationships between them. Create a new file in the `src/resources` directory called `mastery_task_03_CD.puml` and 
 add the plant uml source code to the file. 
 
-Run the `tct-task3-design` workflow and ensure it passes, create a commit, and submit a CR to you near-peer reviewer. 
-Make sure the title of both the commit and CR start with `[MT03][Design]`. Please include a link to your diagrams in 
-the plantuml tool in the details section of your CR. This will allow your reviewer to view your rendered diagrams 
-alongside the uml.
+You can run the MT3DesignIntrospection test to ensure you've met the requirements for this design. Either directly or by
+running  `./gradlew -q clean :test --tests 'tct.MT3DesignIntrospection'`
 
 &nbsp;
 
 ### Milestone 2: Implementation
-**Reviewer: Project Buddy**
 
 Implement your new design. You likely will hit a point where you're not sure what to do about `getMass()` or 
 `canFitItem()` in your `Packaging` class. One way to handle a method that needs to exist, but doesn't have any logical 
 implementation is to just return some default value. However, this allows your methods to be used without the caller
 knowing they really shouldn't be calling these methods. Another way is to implement it by throwing an exception that 
-says "This method is not supported!". We can do that by throwing a `UnsupprtedOperationException`. Now, if a anyone
+says "This method is not supported!". We can do that by throwing a `UnsupprtedOperationException`. Now, if anyone
 calls these methods, they'll get a strong signal that they shouldn't be!
 
 **Optional Side Quest: Kandinsky Class**
@@ -109,10 +111,13 @@ You may notice that the `PolyBag` class isn’t referenced anywhere in our code 
 since the existing fulfillment centers (FCs) can use our new code and get confident that it works before we introduce 
 any other changes.
 
-Once your design is implemented, the `tct-task3-implement` workflow should pass. Commit your code with a message 
-starting with `[MT03][Implement]` and submit a CR to your Project Buddy.
+**HINTS:** There are some tests in `ShipmentOptionTest` that check for equality between `Packages` (which you will be
+instantiating as `Box`s). For these tests to pass you will need to Generate `equals` and `hashcode` inside the `Box`
+class. Boxes with different dimensions are not equal.
+
+Once your design is implemented, the MT3 tests should pass.
 
 **Exit Checklist**
-- `rde wflow run tct-task3` passes
-- Your CR creating your design approach has been approved and the code pushed
-- Your CR implementing your design has been approved and the code pushed
+-  `./gradlew -q clean :test --tests 'tct.MT3*'` passes
+-  `./gradlew -q clean :test --tests 'com.amazon.ata.*'` passes
+- You've pushed to github

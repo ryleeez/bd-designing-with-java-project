@@ -1,12 +1,8 @@
 ## Mastery Task 7: We Will Mock You
 
-**Reviewer: Project Buddy**
-
 **Unlocks after:**
 
 * Milestone 1: Lesson 8, *Mocking*
-
-&nbsp;
 
 The good news: we just hired a senior engineer for the team. The bad news: she is outraged that we do not use mocks in
 our `ShipmentService` tests! She explains that without mocks, our unit tests are brittle because they depend on the
@@ -23,10 +19,8 @@ You can use `PrepareShipmentActivityTest` as a reference, since its tests alread
 Feel free to mock dependencies in any other tests, too; mocks are really neat, and we’re not going to stop you from
 getting more experience if you like. 
 
-Make sure the `tct-task7` workflow passes, get approval from your Project Buddy on a CR (prefixed with `[MT07]`),
-and push your code.
-
 **Exit Checklist**
-- `rde wflow run tct-task7` passes
+- `./gradlew -q clean :test --tests 'tct.MT7*'` passes
+- All TCTs should now pass - `./gradlew -q clean :test --tests 'tct*'` passes
+- `./gradlew -q clean :test --tests 'com.amazon.ata.*'` passes
 - You're `ShipmentServiceTest` no longer depends on the actual implementation of `PackagingDAO`
-- Your CR adding mocking has been approved and the code pushed

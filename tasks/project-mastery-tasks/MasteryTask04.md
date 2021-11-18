@@ -8,7 +8,6 @@
 &nbsp;
 
 ### Milestone 1: Clean Up on Aisle 82
-**Reviewer: Project Buddy**
 
 IAD2 is the first FC to make arrangements to onboard with new polybag options, and they’ll be ready in two weeks. You
 decided to have a look at the `PackagingDatastore` and noticed that IAD2 has A4 boxes (`CORRUGATE` boxes that are
@@ -21,12 +20,10 @@ the duplicate. This is a perfect time to exercise Postel's Law (aka the Principl
 
 Update the `PackagingDAO` (and any other necessary classes) to detect and ignore duplicate `FcPackagingOptions`.
 "Duplicate" in this case means that the FC code is identical, and the `Packaging` has the same size and the same
-material. Write unit tests for your updated code.
-
-Let’s get a review. Make sure the `tct-task4-unique` workflow passes, make a commit with a message starting with
-`[MT04][Unique]`, then submit a CR to your project buddy. As usual, once you get a ship-it, push your commit.
-
-&nbsp;
+material. We can acheive this by instead of using an ArrayList to hold our `fcPackagingOptiona` we can use a `HashMap`
+who keys are the `FulfillmentCenter`s and whose values are a `HashSet` of `FcPackagingOptions`.
+This will complicate the constructor as you will need to iterate through each of the `FcPackagingOptions` and add them
+to the HashMap, and you will need to check for and handle whether the entry already exists or not.
 
 ### Milestone 2: Lookup on Aisle 82
 
@@ -42,26 +39,22 @@ Update the `PackagingDAO` so the `findShipmentOptions()` method only has to chec
 provided `FulfillmentCenter`, instead of searching through all combinations. (Don’t look it up by its code; use the
 `FulfillmentCenter` object.) Reduce the number of checks from from O(n*m) to O(m). 
 
-There’s just one more milestone to go, so you can hold off on your CR a little longer.
-
-&nbsp;
+Write a unit test inside of `PackagingDAOTest` and test that finding shipment options for `IAD2` will in fact return
+a single option rather than 2 identical options (as would have occured prior to us updating the `PackagingDAO`).
 
 ### Milestone 3: Setup on IAD2
-**Reviewer: ATA-Unit2-Instructor-Reviewers**
 
 The system is ready, and you’ve improved its correctness and efficiency. Add the new polybag options for IAD2. In
 `PackagingDatastore`, you’ll see a collection of `FcPackagingOption`s named `fcPackagingOptions`.
 In task 3, you had to update the `createFcPackagingOption` to create a `Box` instead of a `Packaging`. Now you’ll need
-to provide a way to create a `PolyBag`, too. It’s up to you how you’d like to do this; just be certain to add two
-`PolyBag` options to IAD2: one with 2,000cc volume, and one with 10,000cc volume.
-
-When you’re done, the `tct-task4-polybag` workflow should pass. Submit a CR for a commit prefixed with `[MT04][Polybag]`
-to the `ATA-Unit2-Instructor-Reviewer`.
-Once you’ve gotten a Ship-It!, push your code and check your pipeline to verify that another test is passing.
+to provide a way to create a `PolyBag`, too. It’s up to you how you’d like to do this. When you're ready, add two
+`PolyBag` options to IAD2: one with 2,000cc volume, and one with 10,000cc volume. You'll then need to update the unit
+test you wrote since there should now be three unique packing options.
 
 **Exit Checklist**
-- `rde wflow run tct-task4` passes
-- Your change to remove the duplicate box has been approved and merged
+- `./gradlew -q clean :test --tests 'tct.MT4*'` passes
+- `./gradlew -q clean :test --tests 'com.amazon.ata.*'` passes
+- Your change to remove the duplicate box has been pushed
 - You've improved the runtime of finding a package to O(m), where m is the number of packages at a single FC
 - You've added the new `PolyBag` options to IAD2
-- An instructor has approved your `PolyBag` CR
+

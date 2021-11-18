@@ -7,11 +7,7 @@
  * in the user manual at https://docs.gradle.org/7.0.2/userguide/multi_project_builds.html
  */
 
-rootProject.name = 'GradleATACurriculumSustainabilityShipmentServiceLambdaSolution'
+rootProject.name = 'SustainabilityShipmentService'
 include 'LibrariesAndUtilities:LessonPlanResources'
 include 'LibrariesAndUtilities:ATACurriculumTestInfrastructure'
-include 'LibrariesAndUtilities:ATAIntegrationTestInfrastructure'
-include 'LibrariesAndUtilities:ATACurriculumTctIntrospection'
 include 'LibrariesAndUtilities:ATACurriculumSustainabilityShipmentServiceIntrospectionTests'
-include 'LibrariesAndUtilities:ATACurriculumSustainabilityShipmentServiceLambdaJavaClient'
-include 'LibrariesAndUtilities:ATACurriculumSustainabilityShipmentServiceTCTs'
