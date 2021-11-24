@@ -7,25 +7,25 @@
 You learned about how ATA projects work in the Unit 1 Project.
 
 The Unit 2 project will be largely the same: we’ll still have Project Preparedness Tasks (PPTs) and Project Mastery
-Tasks (MTs) that we check for completion and correctness with Task Completion Tests (TCTs). We’ll still let you know 
+Tasks (MTs) that we check for completion and correctness with Task Completion Tests (TCTs). We’ll still let you know
 when the lessons have covered the material to "unlock" each task. There will still be Project Buddies, Near-peer
-Reviewers, Office Hours, and the Community Question and Answer (CQA) board in SIM. 
+Reviewers, Office Hours, and the Community Question and Answer (CQA) board in SIM.
 
 There will also be a few differences.
 
 ### Welcome to the Cloud
-In Unit 2 we’ll start **deploying our code to AWS**. We will still develop and run code locally, but our code 
-will also live in the cloud! This means that someone or something, a person or another team's code, can interact with 
-your service. Think about pictures that we have on our phones. When they get added to the cloud, we can share them 
+In Unit 2 we’ll start **deploying our code to AWS**. We will still develop and run code locally, but our code
+will also live in the cloud! This means that someone or something, a person or another team's code, can interact with
+your service. Think about pictures that we have on our phones. When they get added to the cloud, we can share them
 with other people. Other people can now see or use our photos, but they don't need our phones to do it. This is similar
-to how teams at Amazon make their services available for customers to use. They put their code in a shared place, and 
+to how teams at Amazon make their services available for customers to use. They put their code in a shared place, and
 then invite customers to use it.
 
-We will make our service available in `beta`. You will see this stage in your new [pipeline](https://pipelines.amazon.com/pipelines/<Alias>ATACurriculumSustainabilityShipmentService). 
-Your `beta` stage will use your very own AWS account to deploy your service code to the cloud. On the stage in the 
-pipeline you will see a long number that is a link. If you hover over it, it will say "AWS Account". Clicking on the 
-link will take you to a tool we use at Amazon to access AWS accounts. You can access your account by clicking the 
-button labeled "Console Access". Feel free to take a look around, but not necessary. We'll take another look later in 
+We will make our service available in `beta`. You will see this stage in your new [pipeline](https://pipelines.amazon.com/pipelines/<Alias>ATACurriculumSustainabilityShipmentService).
+Your `beta` stage will use your very own AWS account to deploy your service code to the cloud. On the stage in the
+pipeline you will see a long number that is a link. If you hover over it, it will say "AWS Account". Clicking on the
+link will take you to a tool we use at Amazon to access AWS accounts. You can access your account by clicking the
+button labeled "Console Access". Feel free to take a look around, but not necessary. We'll take another look later in
 the project.
 
 `Beta` is typically the first place a team will push and share code to. A team needs to have a place that isn't
@@ -36,11 +36,11 @@ what it is expected to. There are often more stages that teams will use for diff
 final stage where code is deployed when it is finally ready to be used by customers.
 
 ### Git Branching
-In Unit 1 you may still have been getting your Git legs underneath you. They might still be wobbly, but we think you 
-are ready to use Git branching to help in developing your project. The fast pace of ATA requires you to keep working on 
+In Unit 1 you may still have been getting your Git legs underneath you. They might still be wobbly, but we think you
+are ready to use Git branching to help in developing your project. The fast pace of ATA requires you to keep working on
 your project while you are waiting for CRs. This is tough if you only work on mainline. So, we've provided a
 [Development Workflow How-To](https://w.amazon.com/bin/view/Amazon_Technical_Academy/Internal/HowTos/Development_Workflow/)
-that describes how you can use `git branch` to work on more than one task at a time. The How-To also includes 
+that describes how you can use `git branch` to work on more than one task at a time. The How-To also includes
 information about `git commit --amend` to keep all your changes in a single commit, and `git rebase` to
 move your changes back to `mainline` so you can push. It includes all the troubleshooting steps to resolve the
 problems you're likely to encounter in Unit 2.
@@ -54,16 +54,16 @@ moving too fast and making a silly mistake.
 
 The second check will verify that your code has the correct coverage. Meaning, your unit tests are validating that the
 majority of your code works. In this unit, that number will be 80%. We don't use a number like 100% because that would
-require us to write unit tests for methods like setters and getters, which isn't a great use of anyone's time. In 
+require us to write unit tests for methods like setters and getters, which isn't a great use of anyone's time. In
 Unit 2, we have added this check to run locally. It is a best practice to do testing as soon as you can, and discover
-any issues as early as possible. Having this check run against the code you are developing will help you identify a 
+any issues as early as possible. Having this check run against the code you are developing will help you identify a
 failure before you push your code!
- 
+
 ### Ambiguity, Complexity, and Scope.
 We’re notching up the ambiguity in this unit's project. You'll notice that in the mastery tasks we will not be as
 explicit about the exact implementation details. Remember, **we value success as a collaborative
-effort**, so ask and answer questions amongst your peers, on the CQA, or in Office Hours. Coincidentally, developers 
-use these same collaborative skills every day, so you’ll be getting good practice for when you graduate. Complexity and 
+effort**, so ask and answer questions amongst your peers, on the CQA, or in Office Hours. Coincidentally, developers
+use these same collaborative skills every day, so you’ll be getting good practice for when you graduate. Complexity and
 scope will also be increased in this project, but not hugely so.
 
 &nbsp;
@@ -102,7 +102,7 @@ use for each order. Packaging options vary by **type** and by **dimension**.
 Each packing station has boxes and mailers of different sizes. The difference between a box and a mailer is a
 difference in **type**, whereas the difference between a small box and a large box is a difference in **dimension**.
 Refer to these typical packing stations to identify the boxes (the straight stacks) and the mailers (the curved
-bundles). 
+bundles).
 
 &nbsp;
 
@@ -170,18 +170,18 @@ is packaged.
 
 ## Technical Design
 
-The SustainabilityShipmentService exposes one API, `PrepareShipment`. This API provides the most cost effective 
+The SustainabilityShipmentService exposes one API, `PrepareShipment`. This API provides the most cost effective
 way to ship a single item from a specific fulfillment center (FC). The code to support this API is located in the
-`ShipmentService` class. It is responsible for providing the shipment recommendation. 
+`ShipmentService` class. It is responsible for providing the shipment recommendation.
 
-The `ShipmentService` uses the `PackagingDAO` to identify all shipping options available in an FC that will fit the 
-item. The `ShipmentService` then picks the shipment option with the lowest monetary cost and sends a shipping 
+The `ShipmentService` uses the `PackagingDAO` to identify all shipping options available in an FC that will fit the
+item. The `ShipmentService` then picks the shipment option with the lowest monetary cost and sends a shipping
 recommendation back to the associate in the FC who is packing the item.
 
-You will update the service to support different packaging types, and to also consider sustainability, not just 
+You will update the service to support different packaging types, and to also consider sustainability, not just
 monetary cost, when choosing the best shipment option.
 
-## Project Preparedness Tasks 
+## Project Preparedness Tasks
 
 We’re taking our first steps in native AWS with this project, so first an overview.
 
@@ -201,7 +201,7 @@ could use a larger computer to run a program that *emulates* many smaller comput
 large computer into multiple small servers. We can then provide one such small server for each program someone wants to
 run.
 
-AWS provides such servers. They’re called Elastic Compute Capacity (EC2) instances. But we can be even more frugal. 
+AWS provides such servers. They’re called Elastic Compute Capacity (EC2) instances. But we can be even more frugal.
 
 Many programs spend most of their time waiting for input. The rest of the time they’re just wasting electricity
 waiting. Ideally, we could reduce power and computer usage by waiting until the service is called by a client, at which
@@ -209,7 +209,7 @@ point we could start an EC2 instance, install our program, run it, send back the
 instance so somebody else could use it. There’s a lot of overhead in turning the computer on and installing our
 program, so we might want to leave it on for a minute or two just in case the same user had some more input.
 
-AWS provides that capability, too. It’s called Lambda. 
+AWS provides that capability, too. It’s called Lambda.
 
 Because Lambda runs programs without a dedicated server, it’s considered "serverless". To be clear, there *is* a server
 involved; we’re just not guaranteed anything about it except that it can run our program. It might run on one physical
@@ -226,36 +226,3 @@ locally for testing.
 To make use of these benefits, the `ShipmentService` runs on Lambda, so you’re going to get first-first hand experience
 running a Lambda service! The RDE tools we used in Unit 1 allow us to combine all these serverless tools and processes
 into RDE workflows, so we can keep our development process simple. Let’s get started!
-
-### [Project Preparedness Task 1: Use the Source](./tasks/project-preparedness-tasks/PreparednessTask01.md)
-
-### [Project Preparedness Task 2: Hello, Project Buddy](./tasks/project-preparedness-tasks/PreparednessTask02.md)
-
-### [Project Preparedness Task 3: The Lay of the Land](./tasks/project-preparedness-tasks/PreparednessTask03.md)
-
-&nbsp;
-
-## Project Mastery Tasks
-
-### [Mastery Task 1: Testing the Waters](./tasks/project-mastery-tasks/MasteryTask01.md)
-
-### [Mastery Task 2: That Cloud Looks Like a Log](./tasks/project-mastery-tasks/MasteryTask02.md)
-
-### [Mastery Task 3: Time is Marching On](./tasks/project-mastery-tasks/MasteryTask03.md)
-
-### [Mastery Task 4: Time is Still Marching On](./tasks/project-mastery-tasks/MasteryTask04.md)
-
-### [Mastery Task 5: The Cost of Progress](./tasks/project-mastery-tasks/MasteryTask05.md)
-
-### [Mastery Task 6: I Fits, I Sits](./tasks/project-mastery-tasks/MasteryTask06.md)
-
-### [Mastery Task 7: We Will Mock You](./tasks/project-mastery-tasks/MasteryTask07.md)
-
-&nbsp;
-
-## Project Reflection
-
-Think over the entire project, from the introduction to the final mastery task completion.
-
-Find the Canvas quiz titled: Project Reflection (in the Unit 2 Project Module), and answer three or more 
-questions.
