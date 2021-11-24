@@ -1,74 +1,37 @@
-# Unit 2 Project: Sustainable Packaging
+# Unit 3 Project: Sustainable Packaging
 
 * * *
 
 ## Preliminaries: Been Here, Got the T-Shirt
 
-You learned about how ATA projects work in the Unit 1 Project.
+You learned about how our projects are structured and work in the Unit 1 Project.
 
-The Unit 2 project will be largely the same: we’ll still have Project Preparedness Tasks (PPTs) and Project Mastery
-Tasks (MTs) that we check for completion and correctness with Task Completion Tests (TCTs). We’ll still let you know
-when the lessons have covered the material to "unlock" each task. There will still be Project Buddies, Near-peer
-Reviewers, Office Hours, and the Community Question and Answer (CQA) board in SIM.
+The Unit 3 project will be largely the same: we’ll still have Project Preparedness Tasks (PPTs) and Project Mastery
+Tasks (MTs) that we check for completion and correctness with Task Completion Tests (TCTs).
 
 There will also be a few differences.
 
 ### Welcome to the Cloud
-In Unit 2 we’ll start **deploying our code to AWS**. We will still develop and run code locally, but our code
+In Unit 3 we’ll start **deploying our code to AWS**. We will still develop and run code locally, but our code
 will also live in the cloud! This means that someone or something, a person or another team's code, can interact with
 your service. Think about pictures that we have on our phones. When they get added to the cloud, we can share them
 with other people. Other people can now see or use our photos, but they don't need our phones to do it. This is similar
 to how teams at Amazon make their services available for customers to use. They put their code in a shared place, and
 then invite customers to use it.
 
-We will make our service available in `beta`. You will see this stage in your new [pipeline](https://pipelines.amazon.com/pipelines/<Alias>ATACurriculumSustainabilityShipmentService).
-Your `beta` stage will use your very own AWS account to deploy your service code to the cloud. On the stage in the
-pipeline you will see a long number that is a link. If you hover over it, it will say "AWS Account". Clicking on the
-link will take you to a tool we use at Amazon to access AWS accounts. You can access your account by clicking the
-button labeled "Console Access". Feel free to take a look around, but not necessary. We'll take another look later in
-the project.
-
-`Beta` is typically the first place a team will push and share code to. A team needs to have a place that isn't
-a laptop to test code before it gets released to customers. When code gets deployed to `beta` (we won't worry too
-much about how that happens just yet, just know it somehow get's moved to a computer in the cloud), it is now available
-to be used by the whole team. Teams use `beta` to run automated tests, just like our TCTs, to make sure the code does
-what it is expected to. There are often more stages that teams will use for different purposes, `Prod` being the
-final stage where code is deployed when it is finally ready to be used by customers.
-
-### Git Branching
-In Unit 1 you may still have been getting your Git legs underneath you. They might still be wobbly, but we think you
-are ready to use Git branching to help in developing your project. The fast pace of ATA requires you to keep working on
-your project while you are waiting for CRs. This is tough if you only work on mainline. So, we've provided a
-[Development Workflow How-To](https://w.amazon.com/bin/view/Amazon_Technical_Academy/Internal/HowTos/Development_Workflow/)
-that describes how you can use `git branch` to work on more than one task at a time. The How-To also includes
-information about `git commit --amend` to keep all your changes in a single commit, and `git rebase` to
-move your changes back to `mainline` so you can push. It includes all the troubleshooting steps to resolve the
-problems you're likely to encounter in Unit 2.
-
 ### Local Code Coverage Check
 Just like in last unit, a couple checks will run on your code after it has been pushed and builds into the version set.
-One check will verify that your code has been code reviewed by an approved reviewer, and the code that was pushed
-matches exactly the code that was approved in the CR. We know it may seem silly to put out a whole new code review for
-what seems like a minor fix, but this is a very typical practice on development teams at Amazon. It helps keep you from
-moving too fast and making a silly mistake.
-
-The second check will verify that your code has the correct coverage. Meaning, your unit tests are validating that the
-majority of your code works. In this unit, that number will be 80%. We don't use a number like 100% because that would
-require us to write unit tests for methods like setters and getters, which isn't a great use of anyone's time. In
-Unit 2, we have added this check to run locally. It is a best practice to do testing as soon as you can, and discover
-any issues as early as possible. Having this check run against the code you are developing will help you identify a
-failure before you push your code!
 
 ### Ambiguity, Complexity, and Scope.
 We’re notching up the ambiguity in this unit's project. You'll notice that in the mastery tasks we will not be as
 explicit about the exact implementation details. Remember, **we value success as a collaborative
-effort**, so ask and answer questions amongst your peers, on the CQA, or in Office Hours. Coincidentally, developers
+effort**, so **ask and answer questions** amongst your peers and in Office Hours (do not make assumptions!). Coincidentally, developers
 use these same collaborative skills every day, so you’ll be getting good practice for when you graduate. Complexity and
 scope will also be increased in this project, but not hugely so.
 
 &nbsp;
 
-## Unit 2 Project Progress and Tracking
+## Unit 3 Project Progress and Tracking
 
 ### Doneness checklist
 
@@ -76,7 +39,7 @@ You're done with this project when you've:
 
 ☐ All Task Completion Tests are passing
 
-☐ Code Coverage Check and CR Verification are passing
+☐ Code Coverage Check passing
 
 ☐ Submitted Project Reflection response in Canvas
 
@@ -170,7 +133,7 @@ is packaged.
 
 ## Technical Design
 
-The SustainabilityShipmentService exposes one API, `PrepareShipment`. This API provides the most cost effective
+The SustainabilityShipmentService uses one API, `PrepareShipment`. This API provides the most cost effective
 way to ship a single item from a specific fulfillment center (FC). The code to support this API is located in the
 `ShipmentService` class. It is responsible for providing the shipment recommendation.
 
@@ -224,5 +187,27 @@ information called the Serverless Application Model (SAM), along with a `sam` to
 locally for testing.
 
 To make use of these benefits, the `ShipmentService` runs on Lambda, so you’re going to get first-first hand experience
-running a Lambda service! The RDE tools we used in Unit 1 allow us to combine all these serverless tools and processes
-into RDE workflows, so we can keep our development process simple. Let’s get started!
+running a Lambda service!
+## Project Mastery Tasks
+
+These tasks are assigned in the appropriate module of the Sprint.
+
+Unlike other units, not all Mastery Tasks apply to the Unit Project here in Unit 3.  Mastery Tasks 1 and 2 provide you with some experience and skills you may use when appropriate in this and subsequent units.  Therefore the running, testing and grading of Mastery Tasks 1 and 2 are different that for the rest of the unit.
+
+Here is a summary of the Mastery Tasks and where they will be assigned:
+
+**Mastery Task 1: Testing the Waters** - Sprint 1, Module 2 - Overview of Remote Debuggung
+
+**Mastery Task 2: That Cloud Looks Like a Log** - Sprint 1, Module 2 - Logging to the Cloud
+
+**Mastery Task 3: Time is Marching On** - Sprint 1, Module 4 - Inheritance and Polymorphism
+
+**Mastery Task 4: Time is Still Marching On** - Sprint 2, Module 3 - Maps
+
+**Mastery Task 5: The Cost of Progress** - Sprint 2, Module 3 - Designing with Composition
+
+**Mastery Task 6: I Fits, I Sits** - Sprint 3, Module 1 - Exception Handling
+
+**Mastery Task 7: We Will Mock You** - Sprint 3, Module 3 - Mocking
+
+### Remember: Smile when you code! ###
