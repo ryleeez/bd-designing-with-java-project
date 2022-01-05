@@ -196,9 +196,9 @@ Unlike other units, not all Mastery Tasks apply to the Unit Project here in Unit
 
 Here is a summary of the Mastery Tasks and where they will be assigned:
 
-**Mastery Task 1: Testing the Waters** - Sprint 1, Module 2 - Overview of Remote Debuggung
+**Mastery Task 1: That Cloud Looks Like a Log** - Sprint 1, Module 1 - Logging to the Cloud
 
-**Mastery Task 2: That Cloud Looks Like a Log** - Sprint 1, Module 2 - Logging to the Cloud
+**Mastery Task 2: Testing the Waters** - Sprint 1, Module 2 - Overview of Remote Debugging
 
 **Mastery Task 3: Time is Marching On** - Sprint 1, Module 4 - Inheritance and Polymorphism
 
@@ -209,5 +209,9 @@ Here is a summary of the Mastery Tasks and where they will be assigned:
 **Mastery Task 6: I Fits, I Sits** - Sprint 3, Module 1 - Exception Handling
 
 **Mastery Task 7: We Will Mock You** - Sprint 3, Module 3 - Mocking
+
+### Special Consideration
+
+```Because the Unit project is built incrementally through the Mastery Tasks, you may discover that tests may not pass on your local machine, but do pass when you submit your code to CodeGrade.  For example, when you are working on Mastery Task 3, tests may run for Mastery Tasks 4 through 7 on your local machine and fail since you have not yet completed those tasks.  This is expected and OK.  The CodeGrade evaluation for each Sprint does not test for Mastery Task to be completed in future Sprints.  As long as you pass the tests for the Mastery Tasks assigned in the Sprint and the CodeGrade evaluation for the Sprint passes you are good.```
 
 ### Remember: Smile when you code! ###
