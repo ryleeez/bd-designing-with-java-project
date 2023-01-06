@@ -115,7 +115,7 @@ public class MT3DesignIntrospectionTests {
         boolean boxContainsMember = PlantUmlClassDiagramHelper.classDiagramTypeContainsMember(memberContent,
             "Box", includedMember);
         boolean polyBagContainsMember = PlantUmlClassDiagramHelper.classDiagramTypeContainsMember(memberContent,
-            "Polybag", includedMember);
+            "PolyBag", includedMember);
 
 
         if (packagingContainsMember || (boxContainsMember && polyBagContainsMember)) {
