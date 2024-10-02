@@ -3,7 +3,7 @@ package com.amazon.ata.types;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class PolyBag extends Packaging{
+public class PolyBag extends Packaging {
     private BigDecimal volume;
 
     public PolyBag(Material material, BigDecimal volume) {
