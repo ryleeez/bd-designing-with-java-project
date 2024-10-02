@@ -38,28 +38,20 @@ public class FcPackagingOption {
 
     @Override
     public boolean equals(Object o) {
-        // Can't be equal to null
-        if (o == null) {
-            return false;
-        }
-
-        // Referentially equal
         if (this == o) {
             return true;
         }
-
-        // Check if it's a different type
-        if (getClass() != o.getClass()) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
         FcPackagingOption that = (FcPackagingOption) o;
-        return Objects.equals(getFulfillmentCenter(), that.getFulfillmentCenter()) &&
-            Objects.equals(getPackaging(), that.getPackaging());
+        return Objects.equals(fulfillmentCenter.getFcCode(), that.fulfillmentCenter.getFcCode()) &&
+                Objects.equals(packaging.getMass(), that.packaging.getMass()) &&
+                Objects.equals(packaging.getMaterial(), that.packaging.getMaterial());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getFulfillmentCenter().hashCode(), getPackaging().hashCode());
+        return Objects.hash(fulfillmentCenter.getFcCode(), packaging.getMass(), packaging.getMaterial());
     }
 }

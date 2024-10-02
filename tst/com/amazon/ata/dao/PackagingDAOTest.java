@@ -3,16 +3,13 @@ package com.amazon.ata.dao;
 import com.amazon.ata.datastore.PackagingDatastore;
 import com.amazon.ata.exceptions.NoPackagingFitsItemException;
 import com.amazon.ata.exceptions.UnknownFulfillmentCenterException;
-import com.amazon.ata.types.FulfillmentCenter;
-import com.amazon.ata.types.Item;
-import com.amazon.ata.types.ShipmentOption;
+import com.amazon.ata.types.*;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PackagingDAOTest {
 
@@ -91,6 +88,48 @@ class PackagingDAOTest {
             "When fulfillment center has multiple packaging that can fit item, return a ShipmentOption "
                 + "for each.");
     }
+
+    @Test
+    public void findShipmentOptions_iad2WithMultipleOptions_returnsThreeUniqueOptions() throws Exception {
+        // GIVEN
+        packagingDAO = new PackagingDAO(datastore);
+
+        // WHEN
+        List<ShipmentOption> shipmentOptions = packagingDAO.findShipmentOptions(smallItem, iad2);
+
+        // THEN
+        assertEquals(3, shipmentOptions.size(),
+                "IAD2 should have three unique packaging options: one Box and two PolyBags.");
+
+        boolean hasBox = false;
+        boolean hasSmallPolyBag = false;
+        boolean hasLargePolyBag = false;
+
+        for (ShipmentOption option : shipmentOptions) {
+            Packaging packaging = option.getPackaging();
+            if (packaging instanceof Box) {
+                hasBox = true;
+                System.out.println("Box: " + ((Box) packaging).getLength() + "x" + ((Box) packaging).getWidth() + "x" + ((Box) packaging).getHeight());
+                assertEquals(Material.CORRUGATE, packaging.getMaterial(), "Box should be made of CORRUGATE");
+            } else if (packaging instanceof PolyBag) {
+                PolyBag polyBag = (PolyBag) packaging;
+                System.out.println("PolyBag: volume = " + polyBag.getVolume());
+                assertEquals(Material.LAMINATED_PLASTIC, polyBag.getMaterial(), "PolyBag should be made of LAMINATED_PLASTIC");
+                if (polyBag.getVolume().compareTo(new BigDecimal("2000")) == 0) {
+                    hasSmallPolyBag = true;
+                } else if (polyBag.getVolume().compareTo(new BigDecimal("10000")) == 0) {
+                    hasLargePolyBag = true;
+                }
+            }
+
+        }
+
+        assertTrue(hasBox, "Should have a Box option");
+        assertTrue(hasSmallPolyBag, "Should have a 2000cc PolyBag option");
+        assertTrue(hasLargePolyBag, "Should have a 10000cc PolyBag option");
+    }
+
+
 
     private Item createItem(String length, String width, String height) {
         return Item.builder()

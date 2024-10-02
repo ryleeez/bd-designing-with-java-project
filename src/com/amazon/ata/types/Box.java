@@ -60,12 +60,13 @@ public class Box extends Packaging {
         Box box = (Box) o;
         return length.equals(box.length) &&
                 width.equals(box.width) &&
-                height.equals(box.height);
+                height.equals(box.height) &&
+                getMaterial().equals(box.getMaterial());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), length, width, height);
+        return Objects.hash(super.hashCode(), length, width, height, getMaterial());
     }
 
 }

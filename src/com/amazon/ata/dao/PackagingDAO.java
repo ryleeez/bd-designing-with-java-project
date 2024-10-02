@@ -9,24 +9,30 @@ import com.amazon.ata.types.Item;
 import com.amazon.ata.types.Packaging;
 import com.amazon.ata.types.ShipmentOption;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Access data for which packaging is available at which fulfillment center.
  */
 public class PackagingDAO {
     /**
-     * A list of fulfillment centers with a packaging options they provide.
+     * A map of fulfillment centers with a packaging options they provide.
      */
-    private List<FcPackagingOption> fcPackagingOptions;
+    private Map<FulfillmentCenter, Set<Packaging>> fcPackagingOptionsMap;
 
     /**
      * Instantiates a PackagingDAO object.
      * @param datastore Where to pull the data from for fulfillment center/packaging available mappings.
      */
     public PackagingDAO(PackagingDatastore datastore) {
-        this.fcPackagingOptions =  new ArrayList<>(datastore.getFcPackagingOptions());
+        this.fcPackagingOptionsMap =  new HashMap<>();
+        for (FcPackagingOption option : datastore.getFcPackagingOptions()) {
+            FulfillmentCenter fc = option.getFulfillmentCenter();
+            Packaging packaging = option.getPackaging();
+            Set<Packaging> packagingSet = fcPackagingOptionsMap.computeIfAbsent(fc, k -> new HashSet<>());
+            boolean added = packagingSet.add(packaging);
+            System.out.println("Added packaging for " + fc.getFcCode() + ": " + packaging.getClass().getSimpleName() + ", Added: " + added);
+        }
     }
 
     /**
@@ -43,31 +49,26 @@ public class PackagingDAO {
     public List<ShipmentOption> findShipmentOptions(Item item, FulfillmentCenter fulfillmentCenter)
             throws UnknownFulfillmentCenterException, NoPackagingFitsItemException {
 
-        // Check all FcPackagingOptions for a suitable Packaging in the given FulfillmentCenter
-        List<ShipmentOption> result = new ArrayList<>();
-        boolean fcFound = false;
-        for (FcPackagingOption fcPackagingOption : fcPackagingOptions) {
-            Packaging packaging = fcPackagingOption.getPackaging();
-            String fcCode = fcPackagingOption.getFulfillmentCenter().getFcCode();
-
-            if (fcCode.equals(fulfillmentCenter.getFcCode())) {
-                fcFound = true;
-                if (packaging.canFitItem(item)) {
-                    result.add(ShipmentOption.builder()
-                            .withItem(item)
-                            .withPackaging(packaging)
-                            .withFulfillmentCenter(fulfillmentCenter)
-                            .build());
-                }
-            }
-        }
-
-        // Notify caller about unexpected results
-        if (!fcFound) {
+        Set <Packaging> fcOptions = fcPackagingOptionsMap.get(fulfillmentCenter);
+        if (fcOptions == null) {
             throw new UnknownFulfillmentCenterException(
                     String.format("Unknown FC: %s!", fulfillmentCenter.getFcCode()));
         }
 
+        // Check all FcPackagingOptions for a suitable Packaging in the given FulfillmentCenter
+        List<ShipmentOption> result = new ArrayList<>();
+        for (Packaging packaging : fcOptions) {
+            if (packaging.canFitItem(item)) {
+                result.add(ShipmentOption.builder()
+                        .withItem(item)
+                        .withPackaging(packaging)
+                        .withFulfillmentCenter(fulfillmentCenter)
+                        .build());
+
+            }
+        }
+
+        // Notify caller about unexpected results
         if (result.isEmpty()) {
             throw new NoPackagingFitsItemException(
                     String.format("No packaging at %s fits %s!", fulfillmentCenter.getFcCode(), item));

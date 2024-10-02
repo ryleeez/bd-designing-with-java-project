@@ -25,7 +25,9 @@ public class PackagingDatastore {
             createFcPackagingOption("IAD2", Material.CORRUGATE, new Box(Material.CORRUGATE, BigDecimal.valueOf(20), BigDecimal.valueOf(20), BigDecimal.valueOf(20))),
             createFcPackagingOption("PDX1", Material.CORRUGATE, new Box(Material.CORRUGATE, BigDecimal.valueOf(40), BigDecimal.valueOf(40), BigDecimal.valueOf(40))),
             createFcPackagingOption("PDX1", Material.CORRUGATE, new Box(Material.CORRUGATE, BigDecimal.valueOf(60), BigDecimal.valueOf(60), BigDecimal.valueOf(60))),
-            createFcPackagingOption("PDX1", Material.CORRUGATE, new Box(Material.CORRUGATE, BigDecimal.valueOf(60), BigDecimal.valueOf(60), BigDecimal.valueOf(60)))
+            createFcPackagingOption("PDX1", Material.CORRUGATE, new Box(Material.CORRUGATE, BigDecimal.valueOf(60), BigDecimal.valueOf(60), BigDecimal.valueOf(60))),
+            createPolyBagOption("IAD2", Material.LAMINATED_PLASTIC, new BigDecimal(2000)),
+            createPolyBagOption("IAD2", Material.LAMINATED_PLASTIC, new BigDecimal(10000))
 
     );
 
@@ -35,6 +37,12 @@ public class PackagingDatastore {
     private FcPackagingOption createFcPackagingOption(String fcCode, Material material, Box box) {
         FulfillmentCenter fc = new FulfillmentCenter(fcCode);
         return new FcPackagingOption(fc, box);
+    }
+
+    private FcPackagingOption createPolyBagOption(String fcCode, Material material, BigDecimal volume) {
+        FulfillmentCenter fc = new FulfillmentCenter(fcCode);
+        Packaging packaging = new PolyBag(material, volume);
+        return new FcPackagingOption(fc, packaging);
     }
 
 
