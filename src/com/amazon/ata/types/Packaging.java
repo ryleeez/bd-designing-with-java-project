@@ -47,8 +47,12 @@ public abstract class Packaging {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Packaging)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Packaging)) {
+            return false;
+        }
         Packaging packaging = (Packaging) o;
         return material == packaging.material;
     }
