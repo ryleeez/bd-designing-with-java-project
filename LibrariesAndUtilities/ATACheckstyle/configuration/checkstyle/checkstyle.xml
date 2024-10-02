@@ -318,4 +318,7 @@
         <!-- Only compatible with Checkstyle 8.11, Amazon's version is too old -->
         <!--<module name="LambdaParameterName"/>, consider for unit 2 -->
     </module>
+    <module name="NeedBraces">
+        <property name="allowSingleLineIf" value="true"/>
+    </module>
 </module>
