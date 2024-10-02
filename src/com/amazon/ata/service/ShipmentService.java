@@ -7,7 +7,6 @@ import com.amazon.ata.types.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * This class is responsible for finding the appropriate shipment option from all available options returned
