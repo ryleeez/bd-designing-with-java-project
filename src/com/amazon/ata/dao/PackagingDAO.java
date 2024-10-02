@@ -30,8 +30,11 @@ public class PackagingDAO {
             FulfillmentCenter fc = option.getFulfillmentCenter();
             Packaging packaging = option.getPackaging();
             Set<Packaging> packagingSet = fcPackagingOptionsMap.computeIfAbsent(fc, k -> new HashSet<>());
-            boolean added = packagingSet.add(packaging);
-            System.out.println("Added packaging for " + fc.getFcCode() + ": " + packaging.getClass().getSimpleName() + ", Added: " + added);
+            packagingSet.removeIf(p -> p.equals(packaging));
+
+            // Add the new packaging
+            packagingSet.add(packaging);
+            System.out.println("Added/Updated packaging for " + fc.getFcCode() + ": " + packaging.getClass().getSimpleName());
         }
     }
 
@@ -56,14 +59,15 @@ public class PackagingDAO {
         }
 
         // Check all FcPackagingOptions for a suitable Packaging in the given FulfillmentCenter
-        List<ShipmentOption> result = new ArrayList<>();
+        Set<ShipmentOption> result = new HashSet<>();
         for (Packaging packaging : fcOptions) {
             if (packaging.canFitItem(item)) {
-                result.add(ShipmentOption.builder()
+                ShipmentOption option = ShipmentOption.builder()
                         .withItem(item)
                         .withPackaging(packaging)
                         .withFulfillmentCenter(fulfillmentCenter)
-                        .build());
+                        .build();
+                result.add(option);
 
             }
         }
@@ -74,6 +78,6 @@ public class PackagingDAO {
                     String.format("No packaging at %s fits %s!", fulfillmentCenter.getFcCode(), item));
         }
 
-        return result;
+        return new ArrayList<>(result);
     }
 }

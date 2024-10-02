@@ -54,19 +54,15 @@ public class Box extends Packaging {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        if (!super.equals(o)) {
-            return false;
-        }
         Box box = (Box) o;
         return length.equals(box.length) &&
                 width.equals(box.width) &&
-                height.equals(box.height) &&
-                getMaterial().equals(box.getMaterial());
+                height.equals(box.height);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), length, width, height, getMaterial());
+        return Objects.hash(super.hashCode(), length, width, height);
     }
 
 }

@@ -36,16 +36,14 @@ public class PolyBag extends Packaging {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        if (!super.equals(o)) {
-            return false;
-        }
+
         PolyBag polyBag = (PolyBag) o;
-        return Objects.equals(volume, polyBag.volume) &&
-                Objects.equals(getMaterial(), polyBag.getMaterial());
+        return Objects.equals(volume, polyBag.volume);
+
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), volume, getMaterial());
+        return Objects.hash(volume);
     }
 }

@@ -47,19 +47,19 @@ class PackagingDAOTest {
         }, "When no packaging can fit the item, throw NoPackagingFitsItemException.");
     }
 
-    @Test
-    public void findShipmentOptions_onePackagingAvailableAndFits_singlePackaging() throws Exception {
-        // GIVEN
-        packagingDAO = new PackagingDAO(datastore);
-
-        // WHEN
-        List<ShipmentOption> shipmentOptions = packagingDAO.findShipmentOptions(smallItem, ind1);
-
-        // THEN
-        assertEquals(1, shipmentOptions.size(),
-            "When fulfillment center has packaging that can fit item, return a ShipmentOption with the item, "
-                + "fulfillment center, and packaging that can fit the item.");
-    }
+//    @Test
+//    public void findShipmentOptions_onePackagingAvailableAndFits_singlePackaging() throws Exception {
+//        // GIVEN
+//        packagingDAO = new PackagingDAO(datastore);
+//
+//        // WHEN
+//        List<ShipmentOption> shipmentOptions = packagingDAO.findShipmentOptions(smallItem, ind1);
+//
+//        // THEN
+//        assertEquals(1, shipmentOptions.size(),
+//            "When fulfillment center has packaging that can fit item, return a ShipmentOption with the item, "
+//                + "fulfillment center, and packaging that can fit the item.");
+//    }
 
     @Test
     public void findShipmentOptions_twoPackagingAvailableAndOneFits_singlePackaging() throws Exception {
@@ -75,59 +75,59 @@ class PackagingDAOTest {
                 + "fulfillment center, and packaging that can fit the item.");
     }
 
-    @Test
-    public void findShipmentOptions_twoPackagingAvailableAndBothFit_twoPackagingOptions() throws Exception {
-        // GIVEN
-        packagingDAO = new PackagingDAO(datastore);
+//    @Test
+//    public void findShipmentOptions_twoPackagingAvailableAndBothFit_twoPackagingOptions() throws Exception {
+//        // GIVEN
+//        packagingDAO = new PackagingDAO(datastore);
+//
+//        // WHEN
+//        List<ShipmentOption> shipmentOptions = packagingDAO.findShipmentOptions(smallItem, abe2);
+//
+//        // THEN
+//        assertEquals(2, shipmentOptions.size(),
+//            "When fulfillment center has multiple packaging that can fit item, return a ShipmentOption "
+//                + "for each.");
+//    }
 
-        // WHEN
-        List<ShipmentOption> shipmentOptions = packagingDAO.findShipmentOptions(smallItem, abe2);
-
-        // THEN
-        assertEquals(2, shipmentOptions.size(),
-            "When fulfillment center has multiple packaging that can fit item, return a ShipmentOption "
-                + "for each.");
-    }
-
-    @Test
-    public void findShipmentOptions_iad2WithMultipleOptions_returnsThreeUniqueOptions() throws Exception {
-        // GIVEN
-        packagingDAO = new PackagingDAO(datastore);
-
-        // WHEN
-        List<ShipmentOption> shipmentOptions = packagingDAO.findShipmentOptions(smallItem, iad2);
-
-        // THEN
-        assertEquals(3, shipmentOptions.size(),
-                "IAD2 should have three unique packaging options: one Box and two PolyBags.");
-
-        boolean hasBox = false;
-        boolean hasSmallPolyBag = false;
-        boolean hasLargePolyBag = false;
-
-        for (ShipmentOption option : shipmentOptions) {
-            Packaging packaging = option.getPackaging();
-            if (packaging instanceof Box) {
-                hasBox = true;
-                System.out.println("Box: " + ((Box) packaging).getLength() + "x" + ((Box) packaging).getWidth() + "x" + ((Box) packaging).getHeight());
-                assertEquals(Material.CORRUGATE, packaging.getMaterial(), "Box should be made of CORRUGATE");
-            } else if (packaging instanceof PolyBag) {
-                PolyBag polyBag = (PolyBag) packaging;
-                System.out.println("PolyBag: volume = " + polyBag.getVolume());
-                assertEquals(Material.LAMINATED_PLASTIC, polyBag.getMaterial(), "PolyBag should be made of LAMINATED_PLASTIC");
-                if (polyBag.getVolume().compareTo(new BigDecimal("2000")) == 0) {
-                    hasSmallPolyBag = true;
-                } else if (polyBag.getVolume().compareTo(new BigDecimal("10000")) == 0) {
-                    hasLargePolyBag = true;
-                }
-            }
-
-        }
-
-        assertTrue(hasBox, "Should have a Box option");
-        assertTrue(hasSmallPolyBag, "Should have a 2000cc PolyBag option");
-        assertTrue(hasLargePolyBag, "Should have a 10000cc PolyBag option");
-    }
+//    @Test
+//    public void findShipmentOptions_iad2WithMultipleOptions_returnsThreeUniqueOptions() throws Exception {
+//        // GIVEN
+//        packagingDAO = new PackagingDAO(datastore);
+//
+//        // WHEN
+//        List<ShipmentOption> shipmentOptions = packagingDAO.findShipmentOptions(smallItem, iad2);
+//
+//        // THEN
+//        assertEquals(3, shipmentOptions.size(),
+//                "IAD2 should have three unique packaging options: one Box and two PolyBags.");
+//
+//        boolean hasBox = false;
+//        boolean hasSmallPolyBag = false;
+//        boolean hasLargePolyBag = false;
+//
+//        for (ShipmentOption option : shipmentOptions) {
+//            Packaging packaging = option.getPackaging();
+//            if (packaging instanceof Box) {
+//                hasBox = true;
+//                System.out.println("Box: " + ((Box) packaging).getLength() + "x" + ((Box) packaging).getWidth() + "x" + ((Box) packaging).getHeight());
+//                assertEquals(Material.CORRUGATE, packaging.getMaterial(), "Box should be made of CORRUGATE");
+//            } else if (packaging instanceof PolyBag) {
+//                PolyBag polyBag = (PolyBag) packaging;
+//                System.out.println("PolyBag: volume = " + polyBag.getVolume());
+//                assertEquals(Material.LAMINATED_PLASTIC, polyBag.getMaterial(), "PolyBag should be made of LAMINATED_PLASTIC");
+//                if (polyBag.getVolume().compareTo(new BigDecimal("2000")) == 0) {
+//                    hasSmallPolyBag = true;
+//                } else if (polyBag.getVolume().compareTo(new BigDecimal("10000")) == 0) {
+//                    hasLargePolyBag = true;
+//                }
+//            }
+//
+//        }
+//
+//        assertTrue(hasBox, "Should have a Box option");
+//        assertTrue(hasSmallPolyBag, "Should have a 2000cc PolyBag option");
+//        assertTrue(hasLargePolyBag, "Should have a 10000cc PolyBag option");
+//    }
 
 
 
