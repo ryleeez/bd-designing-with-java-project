@@ -10,9 +10,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MonetaryCostStrategyTest {
 
-    private static final Packaging BOX_10x10x20 =
-        new Packaging(Material.CORRUGATE, BigDecimal.valueOf(10), BigDecimal.valueOf(10), BigDecimal.valueOf(20));
-
     private MonetaryCostStrategy strategy;
 
     @BeforeEach
@@ -23,15 +20,33 @@ public class MonetaryCostStrategyTest {
     @Test
     void getCost_corrugateMaterial_returnsCorrectCost() {
         // GIVEN
+        Box box = new Box(Material.CORRUGATE, BigDecimal.TEN, BigDecimal.TEN, BigDecimal.TEN);
         ShipmentOption option = ShipmentOption.builder()
-            .withPackaging(BOX_10x10x20)
-            .build();
+                .withPackaging(box)
+                .build();
 
         // WHEN
         ShipmentCost shipmentCost = strategy.getCost(option);
 
         // THEN
-        assertTrue(BigDecimal.valueOf(5.43).compareTo(shipmentCost.getCost()) == 0,
-            "Incorrect monetary cost calculation for a box with dimensions 10x10x20.");
+        BigDecimal expectedCost = BigDecimal.valueOf(3.43);
+        assertTrue(expectedCost.compareTo(shipmentCost.getCost()) == 0,
+                String.format("Expected shipment cost to be %s, but was %s", expectedCost, shipmentCost.getCost()));
+    }
+    @Test
+    public void getCost_polybagShipmentOption_calculatesCorrectCost() {
+        // GIVEN
+        PolyBag polyBag = new PolyBag(Material.LAMINATED_PLASTIC, BigDecimal.valueOf(1000));
+        ShipmentOption shipmentOption = ShipmentOption.builder()
+                .withPackaging(polyBag)
+                .build();
+
+        // WHEN
+        ShipmentCost shipmentCost = strategy.getCost(shipmentOption);
+
+        // THEN
+        BigDecimal expectedCost = BigDecimal.valueOf(19 * 0.25 + 0.43);
+        assertTrue(expectedCost.compareTo(shipmentCost.getCost()) == 0,
+                String.format("Expected shipment cost to be %s, but was %s", expectedCost, shipmentCost.getCost()));
     }
 }

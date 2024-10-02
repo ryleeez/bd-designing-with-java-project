@@ -18,11 +18,11 @@ public class PackagingTest {
     private BigDecimal packagingWidth = BigDecimal.valueOf(3.3);
     private BigDecimal packagingHeight = BigDecimal.valueOf(8.1);
 
-    private Packaging packaging;
+    private Box box;
 
     @BeforeEach
     public void setUp() {
-        packaging = new Packaging(packagingMaterial, packagingLength, packagingWidth, packagingHeight);
+        box = new Box(packagingMaterial, packagingLength, packagingWidth, packagingHeight);
     }
 
     @Test
@@ -35,7 +35,7 @@ public class PackagingTest {
             .build();
 
         // WHEN
-        boolean canFit = packaging.canFitItem(item);
+        boolean canFit = box.canFitItem(item);
 
         // THEN
         assertFalse(canFit, "Item with longer length than package should not fit in the package.");
@@ -51,7 +51,7 @@ public class PackagingTest {
             .build();
 
         // WHEN
-        boolean canFit = packaging.canFitItem(item);
+        boolean canFit = box.canFitItem(item);
 
         // THEN
         assertFalse(canFit, "Item with longer width than package should not fit in the package.");
@@ -67,7 +67,7 @@ public class PackagingTest {
             .build();
 
         // WHEN
-        boolean canFit = packaging.canFitItem(item);
+        boolean canFit = box.canFitItem(item);
 
         // THEN
         assertFalse(canFit, "Item with longer height than package should not fit in the package.");
@@ -83,7 +83,7 @@ public class PackagingTest {
             .build();
 
         // WHEN
-        boolean canFit = packaging.canFitItem(item);
+        boolean canFit = box.canFitItem(item);
 
         // THEN
         assertFalse(canFit, "Item the same size as the package should not fit in the package.");
@@ -99,7 +99,7 @@ public class PackagingTest {
             .build();
 
         // WHEN
-        boolean canFit = packaging.canFitItem(item);
+        boolean canFit = box.canFitItem(item);
 
         // THEN
         assertTrue(canFit, "Item smaller than the package should fit in the package.");
@@ -108,10 +108,10 @@ public class PackagingTest {
     @Test
     public void getMass_calculatesMass_returnsCorrectMass() {
         // GIVEN
-        packaging = new Packaging(Material.CORRUGATE, BigDecimal.TEN, BigDecimal.TEN, BigDecimal.valueOf(20));
+        box = new Box(Material.CORRUGATE, BigDecimal.TEN, BigDecimal.TEN, BigDecimal.valueOf(20));
 
         // WHEN
-        BigDecimal mass = packaging.getMass();
+        BigDecimal mass = box.getMass();
 
         // THEN
         assertEquals(BigDecimal.valueOf(1000), mass,
@@ -121,10 +121,10 @@ public class PackagingTest {
     @Test
     public void equals_sameObject_isTrue() {
         // GIVEN
-        Packaging packaging = new Packaging(Material.CORRUGATE, packagingLength, packagingWidth, packagingHeight);
+        Box box = new Box(Material.CORRUGATE, packagingLength, packagingWidth, packagingHeight);
 
         // WHEN
-        boolean result = packaging.equals(packaging);
+        boolean result = box.equals(box);
 
         // THEN
         assertTrue(result, "An object should be equal with itself.");
@@ -133,10 +133,10 @@ public class PackagingTest {
     @Test
     public void equals_nullObject_returnsFalse() {
         // GIVEN
-        Packaging packaging = new Packaging(Material.CORRUGATE, packagingLength, packagingWidth, packagingHeight);
+        Box box = new Box(Material.CORRUGATE, packagingLength, packagingWidth, packagingHeight);
 
         // WHEN
-        boolean isEqual = packaging.equals(null);
+        boolean isEqual = box.equals(null);
 
         // THEN
         assertFalse(isEqual, "A Packaging should not be equal with null.");
@@ -145,11 +145,11 @@ public class PackagingTest {
     @Test
     public void equals_differentClass_returnsFalse() {
         // GIVEN
-        Packaging packaging = new Packaging(Material.CORRUGATE, packagingLength, packagingWidth, packagingHeight);
+        Box box = new Box(Material.CORRUGATE, packagingLength, packagingWidth, packagingHeight);
         Object other = "String type!";
 
         // WHEN
-        boolean isEqual = packaging.equals(other);
+        boolean isEqual = box.equals(other);
 
         // THEN
         assertFalse(isEqual, "A Packaging should not be equal to an object of a different type.");
@@ -158,11 +158,11 @@ public class PackagingTest {
     @Test
     public void equals_sameAttributes_returnsTrue() {
         // GIVEN
-        Packaging packaging = new Packaging(Material.CORRUGATE, packagingLength, packagingWidth, packagingHeight);
-        Object other = new Packaging(Material.CORRUGATE, packagingLength, packagingWidth, packagingHeight);
+        Box box = new Box(Material.CORRUGATE, packagingLength, packagingWidth, packagingHeight);
+        Object other = new Box(Material.CORRUGATE, packagingLength, packagingWidth, packagingHeight);
 
         // WHEN
-        boolean isEqual = packaging.equals(other);
+        boolean isEqual = box.equals(other);
 
         // THEN
         assertTrue(isEqual, "Packaging with the same attributes should be equal.");
@@ -171,11 +171,11 @@ public class PackagingTest {
     @Test
     public void hashCode_equalObjects_equalHash() {
         // GIVEN
-        Packaging packaging = new Packaging(Material.CORRUGATE, packagingLength, packagingWidth, packagingHeight);
-        Packaging other = new Packaging(Material.CORRUGATE, packagingLength, packagingWidth, packagingHeight);
+        Box box = new Box(Material.CORRUGATE, packagingLength, packagingWidth, packagingHeight);
+        Box other = new Box(Material.CORRUGATE, packagingLength, packagingWidth, packagingHeight);
 
         // WHEN + THEN
-        assertEquals(packaging.hashCode(), other.hashCode(), "Equal objects should have equal hashCodes");
+        assertEquals(box.hashCode(), other.hashCode(), "Equal objects should have equal hashCodes");
     }
     @Test
     public void height_width_length_variables_removed_from_packaging_class() {
