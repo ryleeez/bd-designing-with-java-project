@@ -1,0 +1,45 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+interface CostStrategy {
+    + getCost(ShipmentOption): ShipmentCost
+}
+
+class WeightedCostStrategy {
+    - monetaryCostStrategy: CostStrategy
+    - carbonCostStrategy: CostStrategy
+    - monetaryWeight: BigDecimal
+    - carbonWeight: BigDecimal
+    + WeightedCostStrategy(CostStrategy, CostStrategy, BigDecimal, BigDecimal)
+    + getCost(ShipmentOption): ShipmentCost
+}
+
+class MonetaryCostStrategy {
+    + getCost(ShipmentOption): ShipmentCost
+}
+
+class CarbonCostStrategy {
+    + getCost(ShipmentOption): ShipmentCost
+}
+
+class ShipmentOption {
+    + getPackaging(): Packaging
+}
+
+class ShipmentCost {
+    - shipmentOption: ShipmentOption
+    - cost: BigDecimal
+    + ShipmentCost(ShipmentOption, BigDecimal)
+    + getShipmentOption(): ShipmentOption
+    + getCost(): BigDecimal
+}
+
+CostStrategy <|.. WeightedCostStrategy
+CostStrategy <|.. MonetaryCostStrategy
+CostStrategy <|.. CarbonCostStrategy
+WeightedCostStrategy o-- "2" CostStrategy
+WeightedCostStrategy ..> ShipmentOption
+WeightedCostStrategy ..> ShipmentCost
+ShipmentCost o-- ShipmentOption
+
+@enduml

@@ -27,7 +27,18 @@ public class PackagingDatastore {
             createFcPackagingOption("PDX1", Material.CORRUGATE, new Box(Material.CORRUGATE, BigDecimal.valueOf(60), BigDecimal.valueOf(60), BigDecimal.valueOf(60))),
             createFcPackagingOption("PDX1", Material.CORRUGATE, new Box(Material.CORRUGATE, BigDecimal.valueOf(60), BigDecimal.valueOf(60), BigDecimal.valueOf(60))),
             createPolyBagOption("IAD2", Material.LAMINATED_PLASTIC, new BigDecimal(2000)),
-            createPolyBagOption("IAD2", Material.LAMINATED_PLASTIC, new BigDecimal(10000))
+            createPolyBagOption("IAD2", Material.LAMINATED_PLASTIC, new BigDecimal(10000)),
+            createPolyBagOption("IAD2", Material.LAMINATED_PLASTIC, new BigDecimal(5000)),
+            createPolyBagOption("YOW4", Material.LAMINATED_PLASTIC, new BigDecimal(2000)),
+            createPolyBagOption("YOW4", Material.LAMINATED_PLASTIC, new BigDecimal(5000)),
+            createPolyBagOption("YOW4", Material.LAMINATED_PLASTIC, new BigDecimal(10000)),
+            createPolyBagOption("IND1", Material.LAMINATED_PLASTIC, new BigDecimal(2000)),
+            createPolyBagOption("IND1", Material.LAMINATED_PLASTIC, new BigDecimal(5000)),
+            createPolyBagOption("ABE2", Material.LAMINATED_PLASTIC, new BigDecimal(2000)),
+            createPolyBagOption("ABE2", Material.LAMINATED_PLASTIC, new BigDecimal(6000)),
+            createPolyBagOption("PDX1", Material.LAMINATED_PLASTIC, new BigDecimal(5000)),
+            createPolyBagOption("PDX1", Material.LAMINATED_PLASTIC, new BigDecimal(10000)),
+            createPolyBagOption("YOW4", Material.LAMINATED_PLASTIC, new BigDecimal(5000))
 
     );
 
