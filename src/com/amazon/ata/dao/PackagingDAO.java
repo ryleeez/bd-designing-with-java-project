@@ -49,7 +49,7 @@ public class PackagingDAO {
     public List<ShipmentOption> findShipmentOptions(Item item, FulfillmentCenter fulfillmentCenter)
             throws UnknownFulfillmentCenterException, NoPackagingFitsItemException {
 
-        Set <Packaging> fcOptions = fcPackagingOptionsMap.get(fulfillmentCenter);
+        Set<Packaging> fcOptions = fcPackagingOptionsMap.get(fulfillmentCenter);
         if (fcOptions == null) {
             throw new UnknownFulfillmentCenterException(
                     String.format("Unknown FC: %s!", fulfillmentCenter.getFcCode()));
