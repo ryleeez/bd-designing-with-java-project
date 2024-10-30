@@ -2,6 +2,8 @@ package com.amazon.ata.service;
 
 import com.amazon.ata.cost.CostStrategy;
 import com.amazon.ata.dao.PackagingDAO;
+import com.amazon.ata.exceptions.NoPackagingFitsItemException;
+import com.amazon.ata.exceptions.UnknownFulfillmentCenterException;
 import com.amazon.ata.types.*;
 
 import java.util.ArrayList;
@@ -39,13 +41,20 @@ public class ShipmentService {
      * @param item the item to package
      * @param fulfillmentCenter fulfillment center in which to look for the packaging
      * @return the lowest cost shipment option for the item and fulfillment center, or null if none found
+     * @throws RuntimeException if the fulfillment center is not recognized
      */
     public ShipmentOption findShipmentOption(final Item item, final FulfillmentCenter fulfillmentCenter) {
         try {
             List<ShipmentOption> results = this.packagingDAO.findShipmentOptions(item, fulfillmentCenter);
             return getLowestCostShipmentOption(results);
-        } catch (Exception e) {
-            return null;
+        } catch (UnknownFulfillmentCenterException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        } catch (NoPackagingFitsItemException e) {
+            return ShipmentOption.builder()
+                    .withItem(item)
+                    .withPackaging(null)
+                    .withFulfillmentCenter(fulfillmentCenter)
+                    .build();
         }
     }
 
